@@ -1,0 +1,13 @@
+{
+    "name": "brscan-deploy",
+    "version": "0.1",
+    "main": "index.php",
+    "ignore": [
+        "**/.*",
+        "public/vendor"
+    ],
+    "dependencies": {
+        "angularAMD": "latest",
+        "angular-route": "1.2.16"
+    }
+}
