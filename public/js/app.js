@@ -1,27 +1,54 @@
-/**
- * bootstraps angular onto the window.document node
- */
 define([
-    'angularAMD',
-    'angular-route'
-], function (angularAMD) {
+    'angular',
+    'ngMaterial'
+], function(angular) {
 
-    var app = angular.module("app", ['ngRoute']);
-    app.config(function($routeProvider) {
+    // var AppRoot = angular.element(document.getElementById('ng-app-container'));
+    //
+    // app.controller('AppCtrl', ['$scope', function($scope) {
+    //     console.log("aeee app ctrl");
+    // }]);
 
+    var app = angular.module('app', ['ngRoute', 'ngSanitize']);
+
+    
+    // require(['js/controllers/controllers.js']);
+
+    app.config(function($routeProvider, $interpolateProvider, $locationProvider) {
+        // $locationProvider.html5Mode({
+        //     enabled: true,
+        //     requireBase: false
+        // });
+        
         $routeProvider
-            .when("/home", angularAMD.route({
-                templateUrl: 'views/home.blade.php',
-                // controller: 'HomeCtrl',
-                // controllerUrl: 'controllers/home'
-            }))
-            .when("/view1", angularAMD.route({
+            .when("/home", {
+                templateUrl: 'home',
+                // controller: 'HomeCtrl'
+                controller: 'AppCtrl'
+            })
+            .when("/view1", {
                 templateUrl: 'views/view1.php',
-                controller: 'View1Ctrl',
-                controllerUrl: 'controllers/view1'
-            }))
+                controller: 'AppCtrl'
+            })
             .otherwise({redirectTo: "/home"});
     });
 
-    return angularAMD.bootstrap(app);
+    app.controller('AppCtrl', ['$scope', function($scope) {
+        if($scope.$resolve) {
+            console.log($($scope.$resolve.$template).attr('ng-controller'));
+        }
+    }]);
+    // app.controller('App1Ctrl', ['$scope', function($scope) {
+    //     console.log(11111);
+    // }]);
+    
+    // app.controller('HomesCtrl', ['$scope', function($scope) {
+    //     console.log("doiss");
+    // }]);
+    
+    return app;
+    // return angularAMD.bootstrap('app', true, document.getElementsByTagName("body")[0]);
+    // return angularAMD.bootstrap(app);
+    
+    // return app;
 });

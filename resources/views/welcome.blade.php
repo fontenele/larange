@@ -46,8 +46,7 @@
 				{{--<div class="title">Laravel 5</div>--}}
 {{--				<div class="quote">{{ Inspiring::quote() }}</div>--}}
 			</div>
-
-            <div ng-view></div>
+			
 		</div>
 
 

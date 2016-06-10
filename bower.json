@@ -1,5 +1,5 @@
 {
-    "name": "brscan-deploy",
+    "name": "larAnge",
     "version": "0.1",
     "main": "index.php",
     "ignore": [
@@ -7,7 +7,15 @@
         "public/vendor"
     ],
     "dependencies": {
-        "angularAMD": "latest",
-        "angular-route": "1.2.16"
+        "jquery": "latest",
+        "angular": "latest",
+        "angular-animate": "latest",
+        "angular-cookies": "latest",
+        "angular-resource": "latest",
+        "angular-route": "latest",
+        "angular-sanitize": "latest",
+        "angular-touch": "latest",
+        "angular-material": "latest",
+        "requirejs": "latest"
     }
 }
