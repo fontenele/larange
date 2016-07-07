@@ -8,14 +8,9 @@
     ],
     "dependencies": {
         "jquery": "latest",
-        "angular": "latest",
-        "angular-animate": "latest",
-        "angular-cookies": "latest",
-        "angular-resource": "latest",
-        "angular-route": "latest",
-        "angular-sanitize": "latest",
-        "angular-touch": "latest",
-        "angular-material": "latest",
-        "requirejs": "latest"
+        "angular": "1.0.8",
+        "angular-material": "1.0.9",
+        "requirejs": "latest",
+        "text": "latest"
     }
 }

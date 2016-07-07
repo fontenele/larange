@@ -1,4 +1,5 @@
-<html lang="en" data-framework="angularjs" id="ng-app-container">
+<!doctype html>
+<html lang="en" ng-controller="CommonController">
     <head>
         <title>larAnge</title>
         <meta charset="utf-8" />
@@ -7,7 +8,18 @@
         <link rel="stylesheet" href="vendor/angular-material/angular-material.css" />
     </head>
     <body>
-        <ng-view></ng-view>
-        <script data-main="js/main" src="vendor/requirejs/require.js"></script>
+        <div>
+            <a href="#/home">Home</a>
+            <a href="#/view1">View1</a>
+            <a href="#/admin" ng-show="isAdmin">admin</a>
+        </div>
+        <div ng-view></div>
+
+        <!--script src="vendor/angular/angular.min.js"></script>
+        <script src="vendor/angular-route/angular-route.js"></script>
+        <script src="vendor/requirejs/require.js"></script>
+        <script src="js/main.js"></script-->
+        <script src="vendor/requirejs/require.js" data-main="js/main"></script>
+        <!--script src="vendor/requirejs/require.js" data-main="js/main"></script-->
     </body>
 </html>
