@@ -41,7 +41,7 @@ define([
                 defer = $q.defer();
 
                 if(!html) {
-                    var dependences = ['text!' + templatePath, controllerPath];
+                    var dependences = ['text!../' + templatePath, controllerPath];
 
                     if(lazyResources) {
                         dependences = dependences.concat(lazyResources.directives);

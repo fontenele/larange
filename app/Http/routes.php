@@ -12,8 +12,9 @@
 */
 
 Route::get('/', 'WelcomeController@index');
+Route::get('view/{template}', 'EngineController@view');
 
-Route::get('home', 'HomeController@index');
+Route::get('home', 'HomeController@home');
 Route::get('view1', 'HomeController@view1');
 
 Route::controllers([

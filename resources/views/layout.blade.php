@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-controller="CommonController">
+<html lang="en" ng-controller="LarangeController">
     <head>
         <title>larAnge</title>
         <meta charset="utf-8" />
@@ -15,11 +15,6 @@
         </div>
         <div ng-view></div>
 
-        <!--script src="vendor/angular/angular.min.js"></script>
-        <script src="vendor/angular-route/angular-route.js"></script>
-        <script src="vendor/requirejs/require.js"></script>
-        <script src="js/main.js"></script-->
         <script src="vendor/requirejs/require.js" data-main="js/main"></script>
-        <!--script src="vendor/requirejs/require.js" data-main="js/main"></script-->
     </body>
 </html>
