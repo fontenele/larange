@@ -4,12 +4,16 @@ String.prototype.capitalizeFirstLetter = function() {
 
 require.config({
     baseUrl: 'js',
-    urlArgs: "_t=" + (new Date()).getTime(),
+    // urlArgs: "_t=" + (new Date()).getTime(),
     paths: {
         'jquery': '../vendor/jquery/dist/jquery.min',
         'angular': '../vendor/angular/angular.min',
         'ocLazyLoad': '../vendor/ocLazyLoad/dist/ocLazyLoad.require',
-        'ngComponentRouter': '../vendor/angular-route/angular-route.min'
+        'ngComponentRouter': '../vendor/angular-route/angular-route.min',
+        'text': '../vendor/text/text',
+        'json': '../vendor/requirejs-plugins/src/json',
+        'lib': '../vendor',
+        'data': '..'
     },
     shim: {
         'angular': ['jquery'],
@@ -56,6 +60,7 @@ require([
                 .when('/:action', {
                     template: '',
                     controller: function($rootScope, $scope, $routeParams, $ocLazyLoad, $q, $http, $compile, $templateRequest) {
+                        console.log("load");
                         var lazyDeferred = $q.defer();
 
                         var controller = $routeParams.action.capitalizeFirstLetter() + 'Controller';

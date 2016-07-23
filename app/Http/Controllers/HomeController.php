@@ -33,11 +33,19 @@ class HomeController extends Controller {
 	}
 
 	public function home() {
-		return ['teste' => 123];
+		return ['tela_home' => 'Fontenele2'];
 	}
 
 	public function view1() {
-		return view('view1');
+		return [
+		    'tela_view1' => 'Funcionou!!!',
+            'students' => [
+                ['name' => 'Mark Waugh', 'city' => 'New York'],
+                ['name' => 'Steve Jonathan', 'city' => 'London'],
+                ['name' => 'John Marcus', 'city' => 'Paris'],
+                ['name' => 'Guilherme Fontenele', 'city' => 'Brasília'],
+            ]
+        ];
 	}
 
 }

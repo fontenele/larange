@@ -1,13 +1,11 @@
 define([], function() {
 
     var mainApp = angular.module("mainApp", []);
-    mainApp.controller('StudentsController', function($scope) {
-        $scope.teste = 'aeeee';
-        $scope.students = [
-            {name: 'Mark Waugh', city:'New York'},
-            {name: 'Steve Jonathan', city:'London'},
-            {name: 'John Marcus', city:'Paris'}
-        ];
+    mainApp.controller('StudentsController', function($scope, $http, $q) {
+        $http.get('/view1').success(function(data) {
+            $scope.teste = data.tela_home;
+            $scope.students = data.students;
+        });
     });
 
 });
