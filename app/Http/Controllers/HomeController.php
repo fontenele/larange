@@ -33,7 +33,10 @@ class HomeController extends Controller {
 	}
 
 	public function home() {
-		return ['tela_home' => 'Fontenele2'];
+		return [
+		    'tela_home' => 'Fontenele',
+            'message' => 'Bem vindo!!!'
+        ];
 	}
 
 	public function view1() {

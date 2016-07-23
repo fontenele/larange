@@ -5,7 +5,7 @@
     <input type="text" ng-model="name" />
     <br/>
     <ul>
-        <li ng-repeat="student in students | filter:name"><%student.name%> , <%student.city%></li>
+        <li ng-repeat="student in students | filter:name"><%student.name%>, <%student.city%></li>
     </ul>
 
     <a href="#/home"> Back</a>
