@@ -34,7 +34,7 @@ class HomeController extends Controller {
 
 	public function home() {
 		return [
-		    'tela_home' => 'Fontenele',
+		    'tela_home' => 'Fontenele' . rand(1, 500),
             'message' => 'Bem vindo!!!'
         ];
 	}
