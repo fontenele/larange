@@ -1,20 +1,17 @@
 <!doctype html>
-<html lang="en" ng-controller="LarangeController">
+<html lang="en">
     <head>
         <title>larAnge</title>
         <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="vendor/angular-material/angular-material.css" />
+        <link rel="stylesheet" href="vendor/angular/angular-csp.css" />
+        <script type="text/javascript" src="vendor/requirejs/require.js" data-main="js/main.js"></script>
     </head>
-    <body>
-        <div>
-            <a href="#/home">Home</a>
-            <a href="#/view1">View1</a>
-            <a href="#/admin" ng-show="isAdmin">admin</a>
-        </div>
-        <div ng-view></div>
+    <body data-ng-controller="PrincipalController" ng-cloak class="ng-cloak">
+        <a id="pagina-principal" title="Ir para a página principal" href="#/home" style="display: none;">Home</a>
 
-        <script src="vendor/requirejs/require.js" data-main="js/main"></script>
+        <h1>Hello <% greetMe %>!. Layout principal! </h1>
+
+        <ng-view id="ng-view"></ng-view>
     </body>
 </html>

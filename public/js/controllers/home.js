@@ -1,15 +1,8 @@
-define([
-    'json!tpl/home'
-], function(json) {
-    console.log(json);
-    function _controller($scope, $rootScope) {
-        // require(['text!tpl/home'], function() {
-        //     console.log("ae", $scope);
-        //     $scope.teste = 'heim?';
-        // });
-        $rootScope.isAdmin = false;
-        $scope.teste = json.teste;
-    }
+define([], function() {
 
-    return _controller;
+    var mainApp = angular.module("mainApp", []);
+    mainApp.controller('HomeController', function($scope) {
+        $scope.teste = '1234';
+    });
+
 });

@@ -1,9 +1,13 @@
 define([], function() {
-    function _controller($scope, $rootScope) {
-        // $scope.teste = 'foi??';
-        $rootScope.isAdmin = true;
-        console.log("aeeeeae", $rootScope);
-    }
 
-    return _controller;
+    var mainApp = angular.module("mainApp", []);
+    mainApp.controller('StudentsController', function($scope) {
+        $scope.teste = 'aeeee';
+        $scope.students = [
+            {name: 'Mark Waugh', city:'New York'},
+            {name: 'Steve Jonathan', city:'London'},
+            {name: 'John Marcus', city:'Paris'}
+        ];
+    });
+
 });

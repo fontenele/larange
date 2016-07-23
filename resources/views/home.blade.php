@@ -1,13 +1,5 @@
-<div class="container teste123">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<div class="panel panel-default">
-				<div class="panel-heading">Home</div>
-
-				<div class="panel-body">
-					You are logged in! <% teste %>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="container" data-ng-controller="HomeController" style="background-color: #9E9E9E">
+	<h2> Welcome <%teste%> </h2>
+	<p><%message%></p>
+	<a href="#/view1"> View 1</a>
 </div>
