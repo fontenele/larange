@@ -8,13 +8,12 @@
     ],
     "dependencies": {
         "jquery": "2.*",
-        "angular": "latest",
-        "angular-route": "latest",
-        "angular-material": "latest",
-        "angular-animate": "latest",
-        "requirejs": "latest",
-        "text": "latest",
-        "requirejs-plugins": "latest",
-        "ocLazyLoad": "latest"
+        "angular": "1.5.8",
+        "angular-route": "1.5.8",
+        "bootstrap": "latest",
+        "requirejs": "2.2.0",
+        "text": "2.0.15",
+        "requirejs-plugins": "1.0.3",
+        "ocLazyLoad": "1.0.9"
     }
 }
