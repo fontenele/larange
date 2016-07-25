@@ -106,7 +106,9 @@ require([
                         var lazyDeferred = $q.defer();
 
                         if(aclFree.indexOf($routeParams.action) < 0 && !$rootScope.authenticated) {
-                            return $location.path('auth|login');
+                            $location.path('auth|login');
+                            $rootScope.menuItemAtual = $location.path().substring(1);
+                            return lazyDeferred.promise;
                         }
 
                         var controller = $routeParams.action.capitalizeFirstLetter() + 'Controller';
@@ -147,16 +149,29 @@ require([
                 redirectTo: 'auth|login'
             });
         })
-            .run(function($rootScope) {
+            .run(function($rootScope, $location) {
                 $rootScope.$on('$routeChangeStart', function(event, toState) {
+                    var url = $location.path().substring(1);
                     var user = JSON.parse(localStorage.getItem('user'));
+
+                    $rootScope.menu = [
+                        {label: 'Home', url: 'home', selected: false},
+                        {label: 'View1', url: 'view1', selected: false}
+                    ];
 
                     if(user) {
                         $rootScope.authenticated = true;
                         $rootScope.currentUser = user;
                     }
 
-                    console.log("mudou", user);
+                    for(i in $rootScope.menu) {
+                        $rootScope.menu[i].selected = false;
+                        if($rootScope.menu[i].url == url) {
+                            $rootScope.menu[i].selected = true;
+                        }
+                    }
+
+                    console.log("mudou", user, $rootScope);
                 });
             });
 
@@ -173,14 +188,17 @@ require([
                     // $scope.menuItemAtual = $location.path().substring(1);
                     //
                     $rootScope.menuLink = function() {
-                        this.item.selected = true;
+                        // for(i in this.items) {
+                        //     this.items[i].selected = false;
+                        // }
+                        // this.item.selected = true;
                         $location.path(this.item.url);
-                        $rootScope.$parent.menuItemAtual = $location.path().substring(1);
+                        // $rootScope.$parent.menuItemAtual = $location.path().substring(1);
                     };
                     console.log($rootScope.$parent, $scope.label);
                 },
-                template:   '<ul class="nav <% loc %>">' +
-                                '<li ng-repeat="item in items">' +
+                template:   '<ul class="nav navbar-nav <% loc %>">' +
+                                '<li ng-repeat="item in items" ng-class="{\'active\': item.selected}" >' +
                                     '<a href="javascript:void(0)" ng-click="menuLink(item.url)"><% item.label %></a>' +
                                 '</li>' +
                             '</ul>'
@@ -196,10 +214,10 @@ require([
                 $scope.menuItemAtual = $location.path().substring(1);
             };
 
-            $scope.menu = [
-                {label: 'Home', url: 'home', selected: false},
-                {label: 'View1', url: 'view1', selected: false}
-            ];
+            // $scope.menu = [
+            //     {label: 'Home', url: 'home', selected: false},
+            //     {label: 'View1', url: 'view1', selected: false}
+            // ];
         });
 
         angular.bootstrap(document.body, ['mainApp']);
