@@ -12,7 +12,8 @@
 */
 
 Route::get('/', 'WelcomeController@index');
-Route::get('view/{template}', 'EngineController@view');
+Route::get('view/{module}/{template?}', 'EngineController@view');
+Route::get('js/{module}/{file?}', 'EngineController@js');
 
 Route::get('home', 'HomeController@home');
 Route::get('view1', 'HomeController@view1');
@@ -21,3 +22,9 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::group(['prefix' => 'api'], function() {
+    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
+    Route::post('authenticate', 'AuthenticateController@authenticate');
+    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+});

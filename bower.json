@@ -14,6 +14,7 @@
         "requirejs": "2.2.0",
         "text": "2.0.15",
         "requirejs-plugins": "1.0.3",
-        "ocLazyLoad": "1.0.9"
+        "ocLazyLoad": "1.0.9",
+        "satellizer": "latest"
     }
 }

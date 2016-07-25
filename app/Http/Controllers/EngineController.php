@@ -7,8 +7,35 @@ class EngineController extends Controller {
         $this->middleware('guest');
     }
 
-    public function view($template) {
-        return view($template);
+    public function view($module, $template = null) {
+        $html = implode('/', explode('|', $module));
+        if($template) {
+            $html.= "/{$template}";
+        }
+
+        if(view()->exists($html)) {
+            return view($html);
+        }
+
+        return '<div>Template dont exists!</div>';
+    }
+
+    public function js($module, $file = null) {
+        header("Content-type: text/javascript");
+
+        $module = implode('/', explode('|', $module));
+        $js = public_path() . "/js/controllers/{$module}";
+
+        if($file) {
+            $js.= "/{$file}";
+        }
+
+        if(file_exists($js)) {
+            print file_get_contents($js);
+        } else {
+            echo 'console.log("JS file dont exists!")';
+        }
+        exit(0);
     }
 
 

@@ -23,12 +23,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#/home">larAnge</a>
+                    <a class="navbar-brand" href="/">larAnge</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav" ng-repeat="item in menu">
                         <li ng-class="{'active':item.url == menuItemAtual}" ng-click="menuItem(item.url)"><a href="javascript:void(0)"><% item.label %></a></li>
                     </ul>
+                    <p class="navbar-text navbar-right">
+                        <a ng-show="authenticated" ng-click="menuItem('auth|login')" href="javascript:void(0)" class="navbar-link">Sair</a>
+                    </p>
                 </div>
             </div>
         </nav>
@@ -39,7 +42,8 @@
                 <li><a ng-click="menuItem('view1')" href="javascript:void(0)">View1</a></li>
                 <li class="active">Data</li>
             </ol>
-            <ng-view id="ng-view"></ng-view>
+            <menu items="menu" location='pull-left'></menu>
+            <ng-view id="ng-view" ng-cloak class="ng-cloak"></ng-view>
         </div>
 
         <footer class="footer">

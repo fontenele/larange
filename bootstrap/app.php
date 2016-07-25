@@ -17,6 +17,17 @@ $app = new Illuminate\Foundation\Application(
 
 /*
 |--------------------------------------------------------------------------
+| Load Environment File on Startup
+|--------------------------------------------------------------------------
+|
+| This will determine, which environment will be loaded for our application.
+|
+*/
+
+require __DIR__.'/env.php';
+
+/*
+|--------------------------------------------------------------------------
 | Bind Important Interfaces
 |--------------------------------------------------------------------------
 |
