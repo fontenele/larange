@@ -69,6 +69,7 @@ require([
                                 $location.path('auth|login');
                                 break;
                             case "invalid_credentials":
+                                alert("usuário/senha inválidos");
                                 localStorage.removeItem('user');
                                 $location.path('auth|login');
                                 break;
