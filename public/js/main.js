@@ -172,7 +172,7 @@ require([
                         }
                     }
 
-                    console.log("mudou", user, $rootScope);
+                    // console.log("mudou", user, $rootScope);
                 });
             });
 
@@ -196,7 +196,7 @@ require([
                         $location.path(this.item.url);
                         // $rootScope.$parent.menuItemAtual = $location.path().substring(1);
                     };
-                    console.log($rootScope.$parent, $scope.label);
+                    // console.log($rootScope.$parent, $scope.label);
                 },
                 template:   '<ul class="nav navbar-nav <% loc %>">' +
                                 '<li ng-repeat="item in items" ng-class="{\'active\': item.selected}" >' +

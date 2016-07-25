@@ -3,7 +3,7 @@ define([], function() {
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('LoginController', function($rootScope, $scope, $http, $q, $auth, $location) {
         $auth.logout().then(function() {
-            console.log("logout");
+            // console.log("logout");
         });
 
         $rootScope.authenticated = false;
@@ -27,7 +27,7 @@ define([], function() {
 
                     $location.path('/home');
                     $rootScope.menuItemAtual = $location.path().substring(1);
-                    console.log($location.path().substring(1));
+                    // console.log($location.path().substring(1));
                 });
             });
         };
