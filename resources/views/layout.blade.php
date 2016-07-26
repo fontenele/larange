@@ -26,9 +26,6 @@
                     <a class="navbar-brand" href="javascript:void(0)" ng-click="menuItem('home')">larAnge</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
-                    <!--ul class="nav navbar-nav" ng-repeat="item in menu">
-                        <li ng-class="{'active': item.selected}" ng-click="menuItem(item.url)"><a href="javascript:void(0)"><% item.label %></a></li>
-                    </ul-->
                     <menu items="menu" location=''></menu>
                     <p class="navbar-text navbar-right">
                         <a ng-show="authenticated" ng-click="menuItem('auth|login')" href="javascript:void(0)" class="navbar-link">Sair</a>
@@ -37,13 +34,20 @@
             </div>
         </nav>
 
-        <div class="container">
-            <ol class="breadcrumb" ng-show="authenticated">
-                <li><a ng-click="menuItem('home')" href="javascript:void(0)">Home</a></li>
-                <li><a ng-click="menuItem('view1')" href="javascript:void(0)">View1</a></li>
-                <li class="active">Data</li>
-            </ol>
-            <ng-view id="ng-view" ng-cloak class="ng-cloak"></ng-view>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3 col-md-2 sidebar">
+                    <menu items="menu" location=''></menu>
+                </div>
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    <ol class="breadcrumb" ng-show="authenticated">
+                        <li><a ng-click="menuItem('home')" href="javascript:void(0)">Home</a></li>
+                        <li><a ng-click="menuItem('view1')" href="javascript:void(0)">View1</a></li>
+                        <li class="active">Data</li>
+                    </ol>
+                    <ng-view id="ng-view" ng-cloak class="ng-cloak"></ng-view>
+                </div>
+            </div>
         </div>
 
         <footer class="footer">

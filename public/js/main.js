@@ -172,7 +172,6 @@ require([
         })
             .run(function($rootScope, $location) {
                 $rootScope.$on('$routeChangeStart', function(event, toState) {
-                    loading.show();
                     var url = $location.path().substring(1);
                     var user = JSON.parse(localStorage.getItem('user'));
 
@@ -194,11 +193,9 @@ require([
                         }
                     }
                 });
-                $rootScope.$on('$routeChangeSuccess', function(event, toState) {
-                    loading.hide();
-                });
             });
 
+        // @TODO move this to directive.js
         mainApp.directive("menu", function($location) {
             return {
                 restrict: "E",
@@ -221,6 +218,9 @@ require([
             }
         });
 
+        /**
+         * App Main Controller
+         */
         mainApp.controller('PrincipalController', function($scope, $ocLazyLoad, $routeParams, $location) {
             $scope.menuItemAtual = $location.path().substring(1);
 
@@ -230,6 +230,9 @@ require([
             };
         });
 
+        /**
+         * Bootstrap angular
+         */
         angular.bootstrap(document.body, ['mainApp']);
     });
 });
