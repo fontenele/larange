@@ -1,7 +1,14 @@
+/**
+ * Capitalize First Letter (ohhh)
+ * @returns {string}
+ */
 String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
+/**
+ * Configure Lib paths
+ */
 require.config({
     baseUrl: 'js',
     urlArgs: "_t=" + (new Date()).getTime(),
@@ -32,6 +39,7 @@ require.config({
         'data': '..'
     },
     shim: {
+        // Dependences
         'angular': ['jquery'],
         'loading': ['jquery'],
         'ngComponentRouter': ['angular'],
@@ -41,6 +49,7 @@ require.config({
     }
 });
 
+// Init libs
 require([
     'ocLazyLoad',
     'ngComponentRouter',
@@ -51,20 +60,31 @@ require([
     var mainApp = angular.module("mainApp", ['ngRoute', 'oc.lazyLoad', 'satellizer']);
 
     angular.element(document).ready(function() {
+
         mainApp.config(function($routeProvider, $ocLazyLoadProvider, $interpolateProvider, $authProvider, $httpProvider, $provide) {
+
+            /**
+             *
+             * @param $q
+             * @param $injector
+             * @param $location
+             * @returns {{responseError: responseError}}
+             */
             function redirectWhenLoggedOut($q, $injector, $location) {
                 return {
+                    request: function(config) {
+                        loading.show();
+                        return config;
+                    },
+                    response: function(response) {
+                        loading.hide();
+                        return response;
+                    },
+                    requestError: function(rejection) {
+                        console.log("request error:", rejection);
+                        return $q.reject(rejection);
+                    },
                     responseError: function(rejection) {
-
-                        // Need to use $injector.get to bring in $state or else we get
-                        // a circular dependency error
-                        // var $state = $injector.get('$state');
-
-                        // Instead of checking for a status code of 400 which might be used
-                        // for other reasons in Laravel, we check for the specific rejection
-                        // reasons to tell us if we need to redirect to the login state
-                        var rejectionReasons = ['token_not_provided', 'token_expired', 'token_absent', 'token_invalid'];
-
                         switch(rejection.data.error) {
                             case "token_not_provided":
                             case "token_expired":
@@ -121,8 +141,8 @@ require([
                         var template = 'view/' + $routeParams.action;// + "?_t=" + (new Date()).getTime();
                         var js = 'js/controllers/' + $routeParams.action + '.js';// + "?_t=" + (new Date()).getTime();
 
+                        // @TODO try eliminate this if else
                         if(routesWithoutJs.indexOf($routeParams.action) >= 0) {
-                            // console.log("ae");
                             js = $routeParams.action; // + '.js' + "?_t=" + (new Date()).getTime();
                             template = 'view/' + $routeParams.action;// + "?_t=" + (new Date()).getTime();
                             $ocLazyLoad.load(js).then(function (a) {
@@ -132,12 +152,7 @@ require([
                                     $compile(tpl)($scope);
                                 });
                             });
-
-                            // $templateRequest($routeParams.action).then(function(html) {
-                            //
-                            // });
                         } else {
-
                             $ocLazyLoad.load(js).then(function (a) {
                                 $templateRequest(template).then(function(html) {
                                     var tpl = angular.element(html);
@@ -157,9 +172,11 @@ require([
         })
             .run(function($rootScope, $location) {
                 $rootScope.$on('$routeChangeStart', function(event, toState) {
+                    loading.show();
                     var url = $location.path().substring(1);
                     var user = JSON.parse(localStorage.getItem('user'));
 
+                    // Load menu dynamic, use $http ou $.get
                     $rootScope.menu = [
                         {label: 'Home', url: 'home', selected: false},
                         {label: 'View1', url: 'view1', selected: false}
@@ -176,8 +193,9 @@ require([
                             $rootScope.menu[i].selected = true;
                         }
                     }
-
-                    // console.log("mudou", user, $rootScope);
+                });
+                $rootScope.$on('$routeChangeSuccess', function(event, toState) {
+                    loading.hide();
                 });
             });
 
@@ -190,18 +208,9 @@ require([
                     items: '='
                 },
                 link: function($rootScope, $scope, $element) {
-                    // $location.path(url);
-                    // $scope.menuItemAtual = $location.path().substring(1);
-                    //
                     $rootScope.menuLink = function() {
-                        // for(i in this.items) {
-                        //     this.items[i].selected = false;
-                        // }
-                        // this.item.selected = true;
                         $location.path(this.item.url);
-                        // $rootScope.$parent.menuItemAtual = $location.path().substring(1);
                     };
-                    // console.log($rootScope.$parent, $scope.label);
                 },
                 template:   '<ul class="nav navbar-nav <% loc %>">' +
                                 '<li ng-repeat="item in items" ng-class="{\'active\': item.selected}" >' +
@@ -219,11 +228,6 @@ require([
                 $location.path(url);
                 $scope.menuItemAtual = $location.path().substring(1);
             };
-
-            // $scope.menu = [
-            //     {label: 'Home', url: 'home', selected: false},
-            //     {label: 'View1', url: 'view1', selected: false}
-            // ];
         });
 
         angular.bootstrap(document.body, ['mainApp']);
