@@ -37,7 +37,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar" ng-show="authenticated">
-                    <menu items="menu" location=''></menu>
+                    <menu items="menu" location='nav-pills nav-stacked"'></menu>
                 </div>
                 <div ng-class="container_class">
                     <ol class="breadcrumb" ng-show="authenticated">

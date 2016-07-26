@@ -70,6 +70,10 @@ ng\:form {
         background-color: #f5f5f5;
         border-right: 1px solid #eee;
     }
+
+    .sidebar .nav li {
+        width: 100%;
+    }
 }
 
 /* Sidebar navigation */
