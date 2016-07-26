@@ -136,9 +136,8 @@ require([
                         // Get User from storage
                         var user = JSON.parse(localStorage.getItem('user'));
 
-                        console.log($routeParams.action, loginRoute);
                         if(!user && $routeParams.action === loginRoute) {
-                            console.log("aeewww");
+                            
                         }
 
                         if(aclFree.indexOf($routeParams.action) < 0 && !$rootScope.authenticated && !user) {

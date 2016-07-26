@@ -14,7 +14,7 @@ body {
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
-    height: 60px;
+    height: 110px;
     background-color: #dfdfdf;
     z-index: 1001;
 }
@@ -100,6 +100,7 @@ ng\:form {
 
 .main {
     padding: 20px;
+    padding-bottom: 70px;
 }
 @media (min-width: 768px) {
     .main {
