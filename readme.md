@@ -16,6 +16,7 @@
 * Install PHP libs `composer install`
 * Install JS libs `bower install`
 * Configure DB in *.local.env* file
+* If you dont use PostgreSQL, edit *config/database.php* file and change DB driver 
 * Create user table `php artisan migrate`
 * Seed users `php artisan db:seed`
 * Test app `php artisan serve`
