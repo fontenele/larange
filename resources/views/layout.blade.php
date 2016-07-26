@@ -23,12 +23,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="javascript:void(0)" ng-click="menuItem('home')">larAnge</a>
+                    <a class="navbar-brand" href="javascript:void(0)" ng-click="menuItem('home')">Larange</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <menu items="menu" location=''></menu>
                     <p class="navbar-text navbar-right">
-                        <a ng-show="authenticated" ng-click="menuItem('auth|login')" href="javascript:void(0)" class="navbar-link">Sair</a>
+                        <a ng-show="authenticated" ng-click="menuItem('auth|login', true)" href="javascript:void(0)" class="navbar-link">Sair</a>
                     </p>
                 </div>
             </div>
@@ -36,10 +36,10 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-3 col-md-2 sidebar">
+                <div class="col-sm-3 col-md-2 sidebar" ng-show="authenticated">
                     <menu items="menu" location=''></menu>
                 </div>
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div ng-class="container_class">
                     <ol class="breadcrumb" ng-show="authenticated">
                         <li><a ng-click="menuItem('home')" href="javascript:void(0)">Home</a></li>
                         <li><a ng-click="menuItem('view1')" href="javascript:void(0)">View1</a></li>
@@ -49,12 +49,12 @@
                 </div>
             </div>
         </div>
-
-        <footer class="footer">
+        <div class="footer">
             <div class="container">
-                <p class="text-muted">Place sticky footer content here.</p>
+                <p class="text-muted"><a href="https://github.com/fontenele/larange" target="_blank">Larange Github project</a></p>
             </div>
-        </footer>
+        </div>
+
 
     </body>
 </html>

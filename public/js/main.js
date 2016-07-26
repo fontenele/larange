@@ -57,6 +57,8 @@ require([
     'satellizer',
     'loading'
 ], function() {
+    var loginRoute = 'auth|login';
+    var authRoute = '/api/authenticate';
     var mainApp = angular.module("mainApp", ['ngRoute', 'oc.lazyLoad', 'satellizer']);
 
     angular.element(document).ready(function() {
@@ -91,12 +93,12 @@ require([
                             case "token_absent":
                             case "token_invalid":
                                 localStorage.removeItem('user');
-                                $location.path('auth|login');
+                                $location.path(loginRoute);
                                 break;
                             case "invalid_credentials":
                                 alert("usuário/senha inválidos");
                                 localStorage.removeItem('user');
-                                $location.path('auth|login');
+                                $location.path(loginRoute);
                                 break;
 
                         }
@@ -110,19 +112,19 @@ require([
             $httpProvider.interceptors.push('redirectWhenLoggedOut');
 
             var routesWithoutJs = [];
-            routesWithoutJs.push('auth|login');
+            routesWithoutJs.push(loginRoute);
 
             var aclFree = [];
-            aclFree.push('auth|login');
+            aclFree.push(loginRoute);
 
-            $authProvider.loginUrl = '/api/authenticate';
+            $authProvider.loginUrl = authRoute;
 
             $interpolateProvider.startSymbol('<%');
             $interpolateProvider.endSymbol('%>');
 
             $ocLazyLoadProvider.config({
                 jsLoader: requirejs,
-                debug: true
+                debug: false
             });
 
             $routeProvider
@@ -131,8 +133,16 @@ require([
                     controller: function($rootScope, $scope, $routeParams, $ocLazyLoad, $q, $http, $compile, $templateRequest, $location) {
                         var lazyDeferred = $q.defer();
 
-                        if(aclFree.indexOf($routeParams.action) < 0 && !$rootScope.authenticated) {
-                            $location.path('auth|login');
+                        // Get User from storage
+                        var user = JSON.parse(localStorage.getItem('user'));
+
+                        console.log($routeParams.action, loginRoute);
+                        if(!user && $routeParams.action === loginRoute) {
+                            console.log("aeewww");
+                        }
+
+                        if(aclFree.indexOf($routeParams.action) < 0 && !$rootScope.authenticated && !user) {
+                            $location.path(loginRoute);
                             $rootScope.menuItemAtual = $location.path().substring(1);
                             return lazyDeferred.promise;
                         }
@@ -167,18 +177,35 @@ require([
                     }
                 })
             .otherwise({
-                redirectTo: 'auth|login'
+                redirectTo: 'home'
             });
         })
-            .run(function($rootScope, $location) {
-                $rootScope.$on('$routeChangeStart', function(event, toState) {
+            .run(function($rootScope, $location, $auth) {
+                $rootScope.$on('$routeChangeSuccess', function(event, toState) {
+
+                    if(toState.params.action == loginRoute) {
+                        $auth.logout();
+                        $rootScope.authenticated = false;
+                        $rootScope.currentUser = null;
+                        // Remove User from storage
+                        localStorage.removeItem('user');
+                        // Container class without sidebar
+                        $rootScope.container_class = 'col-sm-12 col-md-12 main';
+                    } else {
+                        // Container class with sidebar
+                        $rootScope.container_class = 'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main';
+                    }
+
+                    // Get URL
                     var url = $location.path().substring(1);
+                    // Get User from storage
                     var user = JSON.parse(localStorage.getItem('user'));
 
                     // Load menu dynamic, use $http ou $.get
                     $rootScope.menu = [
                         {label: 'Home', url: 'home', selected: false},
-                        {label: 'View1', url: 'view1', selected: false}
+                        {label: 'View1', url: 'view1', selected: false},
+                        {label: 'Panel', url: 'panel', selected: false},
                     ];
 
                     if(user) {
@@ -186,8 +213,11 @@ require([
                         $rootScope.currentUser = user;
                     }
 
+                    // Define active menu
                     for(i in $rootScope.menu) {
+                        // Remove all selected
                         $rootScope.menu[i].selected = false;
+                        // Add active to selected item
                         if($rootScope.menu[i].url == url) {
                             $rootScope.menu[i].selected = true;
                         }
@@ -221,12 +251,17 @@ require([
         /**
          * App Main Controller
          */
-        mainApp.controller('PrincipalController', function($scope, $ocLazyLoad, $routeParams, $location) {
+        mainApp.controller('PrincipalController', function($scope, $ocLazyLoad, $routeParams, $location, $auth) {
             $scope.menuItemAtual = $location.path().substring(1);
 
-            $scope.menuItem = function(url) {
+            $scope.menuItem = function(url, logout) {
+                if(logout) {
+                    // Logout in satellizer
+                    $auth.logout();
+                    // Remove User from storage
+                    localStorage.removeItem('user');
+                }
                 $location.path(url);
-                $scope.menuItemAtual = $location.path().substring(1);
             };
         });
 
