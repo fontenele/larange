@@ -24,3 +24,6 @@
 ### Test app
 * login: guilherme@fontenele.net
 * password: secret
+
+### Thanks
+- [@chenkie] (https://github.com/chenkie) with [jot-bot] (https://github.com/chenkie/jot-bot) project, show me how to use JWT in laravel and angular
