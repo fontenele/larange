@@ -1,10 +1,10 @@
 ### PHP/JS Framework
 
-- Laravel 5
-- AngularJS
-- RequireJS
-- Twitter Bootstrap
-- Auth using JWT - JSON Web Token with Sattelizer e jwt-auth plugins
+- [Laravel 5] (https://github.com/laravel/laravel)
+- [AngularJS] (https://github.com/angular/angular)
+- [RequireJS] (https://github.com/requirejs/requirejs)
+- [Twitter Bootstrap] (https://github.com/twbs/bootstrap)
+- Auth using JWT - JSON Web Token with [Sattelizer] (https://github.com/sahat/satellizer) e [jwt-auth] (https://github.com/tymondesigns/jwt-auth) plugins
 - Load dynamic views, js and json per route
 - Monthly maintenance
 - Simple code
