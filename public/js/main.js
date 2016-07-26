@@ -9,7 +9,10 @@ require.config({
         //jquery
         'jquery': '../vendor/jquery/dist/jquery.min',
 
-        //jquery
+        //plugins
+        'loading': 'plugins/loading',
+
+        //bootstrap
         'bootstrap': '../vendor/bootstrap/dist/js/bootstrap.min',
 
         // angular
@@ -30,6 +33,7 @@ require.config({
     },
     shim: {
         'angular': ['jquery'],
+        'loading': ['jquery'],
         'ngComponentRouter': ['angular'],
         'ocLazyLoad': ['angular'],
         'bootstrap': ['angular'],
@@ -41,7 +45,8 @@ require([
     'ocLazyLoad',
     'ngComponentRouter',
     'bootstrap',
-    'satellizer'
+    'satellizer',
+    'loading'
 ], function() {
     var mainApp = angular.module("mainApp", ['ngRoute', 'oc.lazyLoad', 'satellizer']);
 

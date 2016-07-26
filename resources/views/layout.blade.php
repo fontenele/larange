@@ -8,6 +8,7 @@
         <meta name="description" content="larAnge - PHP5 Framework PHP+JS (laravel, requirejs, angular, bootstrap)">
         <meta name="author" content="Guilherme Fontenele <http://github.com/fontenele>">
         <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="css/plugins/loading.css" />
         <link rel="stylesheet" href="css/app.css" />
         <script type="text/javascript" src="vendor/requirejs/require.js" data-main="js/main.js"></script>
     </head>
@@ -22,7 +23,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">larAnge</a>
+                    <a class="navbar-brand" href="javascript:void(0)" ng-click="menuItem('home')">larAnge</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <!--ul class="nav navbar-nav" ng-repeat="item in menu">
@@ -37,12 +38,11 @@
         </nav>
 
         <div class="container">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb" ng-show="authenticated">
                 <li><a ng-click="menuItem('home')" href="javascript:void(0)">Home</a></li>
                 <li><a ng-click="menuItem('view1')" href="javascript:void(0)">View1</a></li>
                 <li class="active">Data</li>
             </ol>
-            <menu items="menu" location='pull-right'></menu>
             <ng-view id="ng-view" ng-cloak class="ng-cloak"></ng-view>
         </div>
 
