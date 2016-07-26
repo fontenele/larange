@@ -19,3 +19,7 @@
 * Create user table `php artisan migrate`
 * Seed users `php artisan db:seed`
 * Test app `php artisan serve`
+
+### Test app
+* login: guilherme@fontenele.net
+* password: secret
