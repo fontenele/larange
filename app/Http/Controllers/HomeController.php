@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
+
 class HomeController extends Controller {
 
 	/*
@@ -21,6 +23,9 @@ class HomeController extends Controller {
 	public function __construct() {
 //		$this->middleware('auth');
 		$this->middleware('jwt.auth');
+//		$this->middleware('jwt.refresh');
+        // RefreshToken.php:40
+        // $resp = Response::make($response, 200)->header('Authorization', 'Bearer 2213213');
 	}
 
 	/**
@@ -39,7 +44,14 @@ class HomeController extends Controller {
         ];
 	}
 
-	public function view1() {
+	public function view1(Response $response) {
+//        $token = \JWTAuth::getToken();
+//        $newToken = \JWTAuth::refresh($token);
+//	    $response->setContent([
+//	        'teste' => 123
+//        ]);//->header('Authorization', $newToken);
+//        return $response;
+//        dd($response->getContent());
 		return [
 		    'tela_view1' => 'Funcionou!!!',
             'students' => [

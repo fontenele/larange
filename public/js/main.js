@@ -78,8 +78,12 @@ require([
                         loading.show();
                         return config;
                     },
-                    response: function(response) {
+                    response: function(response, $auth) {
                         loading.hide();
+                        // $auth.setToken()
+                        if(response.headers('authorization')) {
+                            console.log("response ok", response.headers('authorization'), $auth);
+                        }
                         return response;
                     },
                     requestError: function(rejection) {
@@ -180,7 +184,8 @@ require([
             });
         })
             .run(function($rootScope, $location, $auth) {
-                $rootScope.$on('$routeChangeSuccess', function(event, toState) {
+
+                $rootScope.$on('$routeChangeSuccess', function(event, toState, response) {
 
                     if(toState.params.action == loginRoute) {
                         $auth.logout();
@@ -246,6 +251,8 @@ require([
 
             }
         });
+
+
 
         /**
          * App Main Controller
