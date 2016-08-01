@@ -15,9 +15,10 @@
     <body data-ng-controller="PrincipalController" ng-cloak class="ng-cloak" layout="column">
 
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
+            <div class="container-fluid">
+                
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -25,12 +26,25 @@
                     </button>
                     <a class="navbar-brand" href="javascript:void(0)" ng-click="menuItem('home')">Larange</a>
                 </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <menu items="menu" location=''></menu>
-                    <p class="navbar-text navbar-right">
+                
+                <div id="navbar-top" class="collapse navbar-collapse">
+                    <menu ng-show="authenticated" items="menu" location=''></menu>
+                    <!--p class="navbar-text navbar-right">
                         <a ng-show="authenticated" ng-click="menuItem('auth|login', true)" href="javascript:void(0)" class="navbar-link">Sair</a>
-                    </p>
+                    </p-->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ng-hide="authenticated" ng-click="menuItem('auth|login')"><a href="javascript:void(0)">Entrar</a></li>
+                        <li ng-show="authenticated" class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><% currentUser.name %> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li ng-click="menuItem('home')"><a href="javascript:void(0)">Admin Panel</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li ng-click="menuItem('auth|login', true)"><a href="javascript:void(0)">Sair</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
+                
             </div>
         </nav>
 
@@ -50,8 +64,20 @@
             </div>
         </div>
         <div class="footer">
-            <div class="container">
-                <p class="text-muted"><a href="https://github.com/fontenele/larange" target="_blank">Larange Github project</a></p>
+            <div class="container-fluid">
+                <div class="col-sm-4">
+                    <p><a href="https://github.com/fontenele/larange" target="_blank">Larange Github project</a></p>
+                    <p><a href="https://github.com/fontenele" target="_blank">@fontenele</a></p>
+                </div>
+                <div class="col-sm-4">
+                    
+                </div>
+                <div class="col-sm-4">
+                    <p><a href="https://github.com/laravel/laravel" target="_blank">Laravel</a></p>
+                    <p><a href="https://github.com/angular/angular" target="_blank">AngularJS</a></p>
+                    <p><a href="https://github.com/requirejs/requirejs" target="_blank">RequireJS</a></p>
+                    <p><a href="https://github.com/twbs/bootstrap" target="_blank">Twitter Bootstrap</a></p>
+                </div>
             </div>
         </div>
 

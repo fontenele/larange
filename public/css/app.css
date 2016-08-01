@@ -14,9 +14,11 @@ body {
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
-    height: 110px;
+    min-height: 110px;
     background-color: #dfdfdf;
     z-index: 1001;
+    padding-top: 10px;
+    border-top: 30px solid #D1D1D1;
 }
 
 
