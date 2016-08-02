@@ -82,7 +82,8 @@ require([
                         loading.hide();
                         // $auth.setToken()
                         if(response.headers('authorization')) {
-                            console.log("response ok", response.headers('authorization'), $auth);
+                            $injector.get('$auth').setToken(response.headers('authorization'));
+                            // console.log("response ok", response.headers('authorization'), $auth, $injector.get('$auth'));
                         }
                         return response;
                     },

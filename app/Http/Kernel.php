@@ -15,6 +15,7 @@ class Kernel extends HttpKernel {
 		'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
 		'Illuminate\Session\Middleware\StartSession',
 		'Illuminate\View\Middleware\ShareErrorsFromSession',
+        'LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware'
 //		'App\Http\Middleware\VerifyCsrfToken',
 	];
 
@@ -24,11 +25,14 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-		'auth' => 'App\Http\Middleware\Authenticate',
-		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
-        'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
-        'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class
+        'csrf'          => 'App\Http\Middleware\VerifyCsrfToken',
+        
+		'auth'          => 'App\Http\Middleware\Authenticate',
+		'auth.basic'    => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
+		'guest'         => 'App\Http\Middleware\RedirectIfAuthenticated',
+        
+        'jwt.auth'      => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
+        'jwt.refresh'   => 'Tymon\JWTAuth\Middleware\RefreshToken'
 	];
 
 }
