@@ -34,7 +34,7 @@ return [
     'grant_types' => [
         'password' => [
             'class' => 'League\OAuth2\Server\Grant\PasswordGrant',
-            'access_token_ttl' => 604800,
+            'access_token_ttl' => 3600,
             'callback' => function($username, $password) {
                 $credentials = [
                     'email' => $username,
@@ -43,9 +43,9 @@ return [
                 
                 if(Auth::once($credentials)) {
                     return Auth::user()->id;
-                } else {
-                    return false;
                 }
+                
+                return false;
             }
         ]
     ],

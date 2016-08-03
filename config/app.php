@@ -200,9 +200,10 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
-        'JWTAuth'    => 'Tymon\JWTAuth\Facades\JWTAuth',
-        'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
-        'Authorizer' => 'LucaDegasperi\OAuth2Server\Facades\AuthorizerFacade',
+        'JWTAuth'    => 'Tymon\JWTAuth\Facades\JWTAuth', // jwt
+        'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory', // jwt
+        
+        'Authorizer' => 'LucaDegasperi\OAuth2Server\Facades\AuthorizerFacade', // oauth
 
 	],
 

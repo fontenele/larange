@@ -23,8 +23,7 @@ class AuthenticateController extends Controller {
      *
      * @return Response
      */
-    public function authenticate(Request $request)
-    {
+    public function authenticate(Request $request) {
         $credentials = $request->only('email', 'password');
         try {
             // verify the credentials and create a token for the user

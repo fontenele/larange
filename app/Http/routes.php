@@ -31,20 +31,13 @@ Route::post('oauth/access_token', function() {
 
 Route::get('api', ['before' => 'oauth', function() {
     // return the protected resource
-    //echo “success authentication”;
     $user_id = Authorizer::getResourceOwnerId(); // the token user_id
     $user = \App\User::find($user_id);// get the user data from database
-
     return Response::json($user);
 }]);
 
-Route::group(['prefix'=>'api','before' => 'oauth'], function() {
-    Route::get('/posts',  'PostController@index');
-
+Route::group(['prefix' => 'api'], function() {
+    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
+    Route::post('authenticate', 'AuthenticateController@authenticate');
+    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
 });
-
-//Route::group(['prefix' => 'api'], function() {
-//    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
-//    Route::post('authenticate', 'AuthenticateController@authenticate');
-//    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
-//});
