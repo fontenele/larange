@@ -79,7 +79,7 @@ require([
                         }
                         return config;
                     },
-                    response: function(response, $auth) {
+                    response: function(response) {
                         loading.hide();
                         // $auth.setToken()
                         // if(response.headers('authorization')) {
@@ -89,7 +89,6 @@ require([
                         return response;
                     },
                     requestError: function(rejection) {
-                        console.log("request error:", rejection);
                         return $q.reject(rejection);
                     },
                     responseError: function(rejection) {
@@ -98,12 +97,15 @@ require([
                             case "token_expired":
                             case "token_absent":
                             case "token_invalid":
+                            case "access_denied":
                                 localStorage.removeItem('user');
+                                localStorage.removeItem('token');
                                 $location.path(loginRoute);
                                 break;
                             case "invalid_credentials":
                                 alert("usuário/senha inválidos");
                                 localStorage.removeItem('user');
+                                localStorage.removeItem('token');
                                 $location.path(loginRoute);
                                 break;
 
