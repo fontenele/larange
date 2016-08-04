@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="css/plugins/loading.css" />
         <link rel="stylesheet" href="css/bootstrap-theme-united.css" />
         <link rel="stylesheet" href="css/app.css" />
-        <script type="text/javascript" src="vendor/requirejs/require.js" data-main="js/main.js"></script>
+        <script type="text/javascript" src="vendor/requirejs/require.js" data-main="js/main"></script>
     </head>
     <body data-ng-controller="PrincipalController" ng-cloak class="ng-cloak" layout="column">
 
