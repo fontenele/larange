@@ -24,7 +24,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="javascript:void(0)" ng-click="menuItem('home')">Larange</a>
+                    <a class="navbar-brand" href="javascript:void(0)" ng-click="menuItem('home')"><img src="{{ asset('images/larange.png') }}" /></a>
                 </div>
                 
                 <div id="navbar-top" class="collapse navbar-collapse">

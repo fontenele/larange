@@ -95,6 +95,17 @@ ng\:form {
     background-color: #428bca;
 }
 
+.navbar-brand {
+    padding: 0px;
+}
+.navbar-brand > img {
+    height: 100%;
+    padding: 15px;
+    width: auto;
+    width: 64px;
+    padding: 7px 14px;
+}
+
 
 /*
  * Main content
