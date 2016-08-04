@@ -19,6 +19,8 @@
 * If you dont use PostgreSQL, edit *config/database.php* file and change DB driver 
 * Create user table `php artisan migrate`
 * Seed users `php artisan db:seed`
+* Publish vendor `php artisan vendor:publish`
+* Insert an OAuth2 client: table oauth_clients: {id: 'GXvOWazQ3lA6YSaFji', secret: 'abcd', name: 'Client1'}
 * Test app `php artisan serve`
 
 ### Test app

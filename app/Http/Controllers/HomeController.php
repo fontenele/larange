@@ -19,8 +19,9 @@ class HomeController extends Controller {
 	 * @return void
 	 */
 	public function __construct() {
+	    $this->beforeFilter('oauth');
 //		$this->middleware('auth');
-		$this->middleware('jwt.auth');
+//		$this->middleware('jwt.auth');
 	}
 
 	/**

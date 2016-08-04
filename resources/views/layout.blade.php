@@ -9,6 +9,7 @@
         <meta name="author" content="Guilherme Fontenele <http://github.com/fontenele>">
         <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="css/plugins/loading.css" />
+        <link rel="stylesheet" href="css/bootstrap-theme-united.css" />
         <link rel="stylesheet" href="css/app.css" />
         <script type="text/javascript" src="vendor/requirejs/require.js" data-main="js/main.js"></script>
     </head>

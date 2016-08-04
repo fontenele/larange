@@ -10,10 +10,17 @@ define([], function() {
                 password: this.password
             };
 
-            $auth.login(credentials).then(function() {
-                return $http.get('api/authenticate/user').then(function(response) {
-                    var user = JSON.stringify(response.data.user);
-                    localStorage.setItem('user', user);
+            $auth.login(credentials).then(function(result) {
+                localStorage.setItem('token', result.data.access_token);
+                
+                return $http({
+                    url: '/api',
+                    method: "POST",
+                    data: {'access_token': result.data.access_token}
+                }).then(function(response) {
+                    var user = response.data;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    
 
                     $rootScope.authenticated = true;
                     $rootScope.currentUser = response.data.user;

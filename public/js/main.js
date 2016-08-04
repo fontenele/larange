@@ -1,12 +1,4 @@
 /**
- * Capitalize First Letter (ohhh)
- * @returns {string}
- */
-String.prototype.capitalizeFirstLetter = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-};
-
-/**
  * Configure Lib paths
  */
 require.config({
@@ -58,7 +50,9 @@ require([
     'loading'
 ], function() {
     var loginRoute = 'auth|login';
-    var authRoute = '/api/authenticate';
+    // var authRoute = '/api/authenticate';
+    var authRoute = '/oauth/access_token';
+    
     var mainApp = angular.module("mainApp", ['ngRoute', 'oc.lazyLoad', 'satellizer']);
 
     angular.element(document).ready(function() {
@@ -76,15 +70,22 @@ require([
                 return {
                     request: function(config) {
                         loading.show();
+                        if(config.method != 'GET') {
+                            if(!config.data) {
+                                config.data = {access_token: localStorage.getItem('token')};
+                            } else {
+                                config.data.access_token = localStorage.getItem('token');
+                            }
+                        }
                         return config;
                     },
                     response: function(response, $auth) {
                         loading.hide();
                         // $auth.setToken()
-                        if(response.headers('authorization')) {
-                            $injector.get('$auth').setToken(response.headers('authorization'));
+                        // if(response.headers('authorization')) {
+                        //     $injector.get('$auth').setToken(response.headers('authorization'));
                             // console.log("response ok", response.headers('authorization'), $auth, $injector.get('$auth'));
-                        }
+                        // }
                         return response;
                     },
                     requestError: function(rejection) {
@@ -151,7 +152,6 @@ require([
                             return lazyDeferred.promise;
                         }
 
-                        var controller = $routeParams.action.capitalizeFirstLetter() + 'Controller';
                         var template = 'view/' + $routeParams.action;// + "?_t=" + (new Date()).getTime();
                         var js = 'js/controllers/' + $routeParams.action + '.js';// + "?_t=" + (new Date()).getTime();
 
@@ -194,6 +194,7 @@ require([
                         $rootScope.currentUser = null;
                         // Remove User from storage
                         localStorage.removeItem('user');
+                        localStorage.removeItem('token');
                         // Container class without sidebar
                         $rootScope.container_class = 'col-sm-12 col-md-12 main';
                     } else {
