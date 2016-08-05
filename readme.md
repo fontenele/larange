@@ -4,7 +4,7 @@
 - [AngularJS] (https://github.com/angular/angular)
 - [RequireJS] (https://github.com/requirejs/requirejs)
 - [Twitter Bootstrap] (https://github.com/twbs/bootstrap)
-- Auth using JWT - JSON Web Token with [Sattelizer (Token-based AngularJS Authentication)] (https://github.com/sahat/satellizer) e [jwt-auth (JSON Web Token Authentication for Laravel)] (https://github.com/tymondesigns/jwt-auth) plugins
+- Auth using OAuth2 - JSON Web Token with [Sattelizer (Token-based AngularJS Authentication)] (https://github.com/sahat/satellizer) e [oauth2-server-laravel (OAuth2 Server for Laravel)] (https://github.com/lucadegasperi/oauth2-server-laravel) plugins
 - Load dynamic views, js and json per route
 - Monthly maintenance
 - Simple code

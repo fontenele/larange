@@ -23,25 +23,20 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-// https://medium.com/@mshanak/laravel-5-token-based-authentication-ae258c12cfea#.yrxi49m8f
-
 Route::post('oauth/access_token', function() {
+    // Token
     app('request')->json()->set('client_id', 'GXvOWazQ3lA6YSaFji');
     app('request')->json()->set('client_secret', 'abcd');
     app('request')->json()->set('grant_type', 'password');
     app('request')->json()->set('username', app('request')->json()->get('email'));
-    return Response::json(Authorizer::issueAccessToken());
+    $response = Authorizer::issueAccessToken();
+    $response['token'] = $response['access_token'];
+    return Response::json($response);
 });
 
-Route::post('api', ['before' => 'oauth', function() {
+Route::post('oauth/user', ['before' => 'oauth', function() {
     // return the protected resource
     $user_id = Authorizer::getResourceOwnerId(); // the token user_id
     $user = \App\User::find($user_id);// get the user data from database
     return Response::json($user);
 }]);
-
-//Route::group(['prefix' => 'api'], function() {
-//    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
-//    Route::post('authenticate', 'AuthenticateController@authenticate');
-//    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
-//});

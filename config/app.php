@@ -145,7 +145,6 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 
-        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Laracasts\Flash\FlashServiceProvider',
         
@@ -200,11 +199,7 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
-        'JWTAuth'    => 'Tymon\JWTAuth\Facades\JWTAuth', // jwt
-        'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory', // jwt
-        
         'Authorizer' => 'LucaDegasperi\OAuth2Server\Facades\AuthorizerFacade', // oauth
-
 	],
 
 ];

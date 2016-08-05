@@ -11,10 +11,14 @@ define([], function() {
             };
 
             $auth.login(credentials).then(function(result) {
+                if(!result.data || !result.data.access_token) {
+                    return;
+                }
+
                 localStorage.setItem('token', result.data.access_token);
-                
+
                 return $http({
-                    url: '/api',
+                    url: '/oauth/user',
                     method: "POST",
                     data: {'access_token': result.data.access_token}
                 }).then(function(response) {

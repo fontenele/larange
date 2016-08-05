@@ -70,7 +70,7 @@ require([
                 return {
                     request: function(config) {
                         loading.show();
-                        if(config.method != 'GET') {
+                        if(config.method != 'GET' && localStorage.getItem('token')) {
                             if(!config.data) {
                                 config.data = {access_token: localStorage.getItem('token')};
                             } else {
@@ -89,6 +89,7 @@ require([
                         return response;
                     },
                     requestError: function(rejection) {
+                        loading.hide();
                         return $q.reject(rejection);
                     },
                     responseError: function(rejection) {
@@ -111,6 +112,7 @@ require([
 
                         }
 
+                        loading.hide();
                         return $q.reject(rejection);
                     }
                 }
