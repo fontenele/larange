@@ -30,3 +30,4 @@
 ### Thanks
 - [@chenkie] (https://github.com/chenkie) with [jot-bot] (https://github.com/chenkie/jot-bot) project, show me how to use JWT in laravel and angular
 - [@eu81273] (https://github.com/eu81273) with [AngularJS-RequireJS-Sample-Project] (https://github.com/eu81273/AngularJS-RequireJS-Sample-Project) project, he integrated RequireJS and AngularJS in older versions, but was the base to understand how they work together, and to make they works in newest versions
+- [@andreymor] (https://github.com/andreymor) helpe me with AngularJS architecture and OAuth2 flows
