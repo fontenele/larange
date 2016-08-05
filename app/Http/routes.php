@@ -17,6 +17,9 @@ Route::get('js/{module}/{file?}', 'EngineController@js');
 
 Route::post('home', 'HomeController@home');
 Route::post('view1', 'HomeController@view1');
+Route::post('admin', 'AdminController@home');
+Route::post('admin/users', 'AdminController@users');
+Route::post('admin/users/edit/{id}', 'AdminController@editUser');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

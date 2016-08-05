@@ -11,17 +11,17 @@
 
 ### Install
 
-* Clone repository `git clone https://github.com/fontenele/larange.git && cd larange`
-* Set write permission in storage dir `chmod -Rf 777 storage`
-* Install PHP libs `composer install`
-* Install JS libs `bower install`
+* Clone repository `$ git clone https://github.com/fontenele/larange.git && cd larange`
+* Set write permission in storage dir `$ chmod -Rf 777 storage`
+* Install PHP libs `$ composer install`
+* Install JS libs `$ bower install` (If you are using Docker or something like and you are root, use `$ bower install --allow-root`)
 * Configure DB in *.local.env* file
 * If you dont use PostgreSQL, edit *config/database.php* file and change DB driver 
-* Create user table `php artisan migrate`
-* Seed users `php artisan db:seed`
-* Publish vendor `php artisan vendor:publish`
+* Create user table `$ php artisan migrate`
+* Seed users `$ php artisan db:seed`
+* Publish vendor `$ php artisan vendor:publish`
 * Insert an OAuth2 client: table oauth_clients: {id: 'GXvOWazQ3lA6YSaFji', secret: 'abcd', name: 'Client1'}
-* Test app `php artisan serve`
+* Test app `$ php artisan serve`
 
 ### Test app
 * login: guilherme@fontenele.net

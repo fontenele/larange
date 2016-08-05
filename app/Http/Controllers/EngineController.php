@@ -17,7 +17,7 @@ class EngineController extends Controller {
             return view($html);
         }
 
-        return '<div>Template dont exists!</div>';
+        return '<div>Template ' . $html . ' dont exists!</div>';
     }
 
     public function js($module, $file = null) {
@@ -33,7 +33,7 @@ class EngineController extends Controller {
         if(file_exists($js)) {
             print file_get_contents($js);
         } else {
-            echo 'console.log("JS file dont exists!")';
+            echo 'console.log("JS file ' . $js . ' dont exists!")';
         }
         exit(0);
     }

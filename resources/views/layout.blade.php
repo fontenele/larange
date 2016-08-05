@@ -38,7 +38,7 @@
                         <li ng-show="authenticated" class="dropdown">
                             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><% currentUser.name %> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li ng-click="menuItem('home')"><a href="javascript:void(0)">Admin Panel</a></li>
+                                <li ng-click="menuItem('admin')"><a href="javascript:void(0)">Admin Panel</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li ng-click="menuItem('auth|login', true)"><a href="javascript:void(0)">Sair</a></li>
                             </ul>
@@ -55,6 +55,7 @@
                     <menu items="menu" location='nav-pills nav-stacked"'></menu>
                 </div>
                 <div ng-class="container_class">
+                    <!-- @TODO FAZER DIRECTIVE -->
                     <ol class="breadcrumb" ng-show="authenticated">
                         <li><a ng-click="menuItem('home')" href="javascript:void(0)">Home</a></li>
                         <li><a ng-click="menuItem('view1')" href="javascript:void(0)">View1</a></li>

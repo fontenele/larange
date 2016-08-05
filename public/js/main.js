@@ -22,6 +22,13 @@ require.config({
         // satellizer
         'satellizer': '../vendor/satellizer/dist/satellizer.min',
 
+        // moment
+        'momentjs': '../vendor/moment/min/moment.min',
+        'momentLocales': '../vendor/moment/min/moment-with-locales.min',
+        'momentLocalesAll': '../vendor/moment/locale/pt-br',
+        'moment': 'plugins/moment',
+        'angular-moment': '../vendor/angular-moment/angular-moment',
+
         // require plugins
         'text': '../vendor/text/text',
         'json': '../vendor/requirejs-plugins/src/json',
@@ -37,18 +44,28 @@ require.config({
         'ngComponentRouter': ['angular'],
         'ocLazyLoad': ['angular'],
         'bootstrap': ['angular'],
-        'satellizer': ['angular']
+        'satellizer': ['angular'],
+        // 'momentjs': ['jquery'],
+        // 'moment': ['momentjs', 'momentLocales'],
+        'momentLocales': ['momentLocalesAll'],
+        // 'angular-moment': ['angular', 'momentjs']
+    },
+    packages: {
+
     }
 });
 
 // Init libs
 require([
+    'moment',
     'ocLazyLoad',
     'ngComponentRouter',
     'bootstrap',
     'satellizer',
-    'loading'
-], function() {
+    'loading',
+    'momentLocales'
+], function(moment) {
+
     var loginRoute = 'auth|login';
     // var authRoute = '/api/authenticate';
     var authRoute = '/oauth/access_token';
@@ -215,7 +232,7 @@ require([
                     $rootScope.menu = [
                         {label: 'Home', url: 'home', selected: false},
                         {label: 'View1', url: 'view1', selected: false},
-                        {label: 'Panel', url: 'panel', selected: false},
+                        {label: 'Admin', url: 'admin', selected: false}
                     ];
 
                     if(user) {
@@ -258,7 +275,23 @@ require([
             }
         });
 
+        /**
+         * Date Format View Helper
+         */
+        mainApp.filter('dateFormat', function() {
+            return function(input, toDate, fromDate) {
+                if(input == null){ return ""; }
 
+                if(fromDate) {
+                    return moment(input, fromDate).format(toDate);
+                }
+                return moment(input).format(toDate);
+                // var _date = $filter('date')(new Date(input), 'MM dd yyyy');
+                //
+                // return _date.toUpperCase();
+
+            };
+        });
 
         /**
          * App Main Controller
