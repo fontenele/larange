@@ -7,20 +7,52 @@ class EngineController extends Controller {
         $this->middleware('guest');
     }
 
-    public function view($module, $template = null) {
-        $html = implode('/', explode('|', $module));
-        if($template) {
-            $html.= "/{$template}";
-        }
-
-        if(view()->exists($html)) {
-            return view($html);
-        }
-
-        return '<div>Template ' . $html . ' dont exists!</div>';
+    public function routes() {
+        // @TODO CRUD FOR THIS
+        return [
+            "login" => [
+                'json' => 'login',
+                'url' => 'login',
+                'controller' => 'js/controllers/auth/login.js',
+                'template' => 'view/auth/login'
+            ],
+            'home' => [
+                'json' => 'home',
+                'url' => 'home',
+                'controller' => 'js/controllers/home.js',
+                'template' => 'view/home'
+            ],
+            'view1' => [
+                'json' => 'view1',
+                'url' => 'view1',
+                'controller' => '',
+                'template' => ''
+            ],
+            'admin' => [
+                'json' => 'admin',
+                'url' => 'admin',
+                'controller' => '',
+                'template' => ''
+            ],
+            'users' => [
+                'json' => 'users',
+                'url' => 'users',
+                'controller' => '',
+                'template' => ''
+            ]
+        ];
     }
 
-    public function js($module, $file = null) {
+    public function view($template) {
+        if(view()->exists($template)) {
+            return view($template);
+        }
+
+        return '<div>Template ' . $template . ' dont exists!</div>';
+    }
+
+    public function js($file) {
+        dd($file);
         header("Content-type: text/javascript");
 
         $module = implode('/', explode('|', $module));

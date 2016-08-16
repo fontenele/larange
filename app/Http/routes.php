@@ -12,8 +12,11 @@
 */
 
 Route::get('/', 'WelcomeController@index');
-Route::get('view/{module}/{template?}', 'EngineController@view');
-Route::get('js/{module}/{file?}', 'EngineController@js');
+
+Route::get('view/{template}', 'EngineController@view')->where('template', '.+');
+Route::get('js/{module}/{file?}', 'EngineController@js')->where('file', '.+');
+
+Route::get('routes', 'EngineController@routes');
 
 Route::post('home', 'HomeController@home');
 Route::post('view1', 'HomeController@view1');
