@@ -23,7 +23,7 @@
 * Insert an OAuth2 client: table oauth_clients: {id: 'GXvOWazQ3lA6YSaFji', secret: 'abcd', name: 'Client1'}
 * Test app `$ php artisan serve`
 
-### Test app
+### Test skew
 * login: guilherme@fontenele.net
 * password: secret
 
