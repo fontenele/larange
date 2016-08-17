@@ -1,6 +1,6 @@
 ### PHP/JS Framework
 
-- [Laravel 5] (https://github.com/laravel/laravel)
+- [Laravel 5.0] (https://github.com/laravel/laravel)
 - [AngularJS] (https://github.com/angular/angular)
 - [RequireJS] (https://github.com/requirejs/requirejs)
 - [Twitter Bootstrap] (https://github.com/twbs/bootstrap)
