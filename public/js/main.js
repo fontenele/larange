@@ -54,6 +54,7 @@ require([
     'loading',
     'momentLocales'
 ], function(moment) {
+    // @TODO ver essas variaveis, nao pode ter elas
     var loginRoute = 'auth|login';
     var authRoute = '/oauth/access_token';
     // var authRoute = '/api/authenticate';
@@ -64,51 +65,67 @@ require([
                 return {
                 }
             };
+
             this.routes = [];
             this.actual = '';
+            this.homeRoute = 'home';
+            this.loginRoute = 'login';
+            this.authRoute = '/oauth/access_token';
+
+            this.setActual = function(_actual) {
+                this.actual = _actual;
+            };
+            this.getActual = function() {
+                return this.actual;
+            };
             this.setRoutes = function(_routes) {
                 this.routes = _routes;
             };
-            this.getRoute = function() {
-                for(var _route in this.routes) {
-                    if(_route === this.actual) {
-                        return this.routes[_route];
-                    }
+            this.getRoute = function(route) {
+                if(route) {
+                    return this.routes[route];
                 }
-            };
-            this.getJson = function () {
-                // @TODO JSON
+                return this.routes[this.getActual()];
             };
         });
     
     var mainApp = angular.module("mainApp", ['ngRoute', 'oc.lazyLoad', 'satellizer', 'Routing']);
     
-    mainApp.service('router', function () {
+    mainApp.service('router', function($http, $q) {
         this.routesProvider = null;
-        // console.log("router");
-        // this.setRoutes = function(routes) {
-        //     console.log("rotas", routes);
-        // }
+        this.setRoutesProvider = function(routesProvider) {
+            this.routesProvider = routesProvider;
+        };
+        this.getRoutesProvider = function() {
+            return this.routesProvider;
+        };
+        this.getJson = function() {
+            var defer = $q.defer();
+            if(!this.getRoutesProvider().getRoute().json) {
+                defer.reject('JSON route not found. (' + this.getRoutesProvider().getActual() + ')');
+            }
+            $http.post(this.getRoutesProvider().getRoute().json).success(function(data) {
+                defer.resolve(data);
+            });
+            return defer.promise;
+        };
     });
     
     angular.element(document).ready(function($http) {
+        // Get routes
         $http.get('routes').then(function (routes) {
-            // console.log( "### routes>>>" , routes);
-            // console.log( "### router>>>" , router);
 
             mainApp.config(function($routeProvider, $ocLazyLoadProvider, $interpolateProvider, $authProvider, $httpProvider, $provide, routesProvider) {
                 // Define routes
                 routesProvider.setRoutes(routes);
-                
-                // console.log("router>>>",router);
-                // router.routeProvider = routesProvider;
-                // console.log(3423423,$http, routesProvider);
-                // $injector.invoke(function() {
-                //
-                // });
-                // console.log($injector);
 
-                function redirectWhenLoggedOut($q, $location) {
+                /**
+                 * HTTP Request Interceptor
+                 * @param $q
+                 * @param $location
+                 * @returns {{request: request, response: response, requestError: requestError, responseError: responseError}}
+                 */
+                function httpInterceptor($q, $location) {
                     return {
                         request: function(config) {
                             loading.show();
@@ -146,7 +163,6 @@ require([
                                     localStorage.removeItem('token');
                                     $location.path(loginRoute);
                                     break;
-
                             }
 
                             loading.hide();
@@ -155,14 +171,9 @@ require([
                     }
                 }
 
-                $provide.factory('redirectWhenLoggedOut', redirectWhenLoggedOut);
-                $httpProvider.interceptors.push('redirectWhenLoggedOut');
-
-                var routesWithoutJs = [];
-                routesWithoutJs.push(loginRoute);
-
-                var aclFree = [];
-                aclFree.push(loginRoute);
+                // Define HTTP Request Interceptor
+                $provide.factory('httpInterceptor', httpInterceptor);
+                $httpProvider.interceptors.push('httpInterceptor');
 
                 $authProvider.loginUrl = authRoute;
 
@@ -186,62 +197,37 @@ require([
                             // Get User from storage
                             var user = JSON.parse(localStorage.getItem('user'));
 
-                            router.routesProvider = routesProvider;
+                            router.setRoutesProvider(routesProvider);
 
                             if(routesProvider.actual != 'login' && !$rootScope.authenticated && !user) {
-                                $location.path(routesProvider.routes['login'].url);
-                                $rootScope.menuItemAtual = $routeParams.action;
+                                $location.path(routesProvider.getRoute('login').url);
+                                $rootScope.menuItemAtual = routesProvider.getActual();
                                 return lazyDeferred.promise;
                             }
 
-                            $ocLazyLoad.load(route.controller).then(function (module) {
-                                $templateRequest(route.template).then(function(html) {
-                                    var tpl = angular.element(html);
-                                    $('#ng-view').html(tpl);
-                                    $compile(tpl)($scope);
-                                });
-                            });
-
-                            return lazyDeferred.promise;
-
-
-                            /**
-                             * ########### FIM ###########
-                             */
-
-                            if(!user && $routeParams.action === loginRoute) {
-
-                            }
-
-                            if(aclFree.indexOf($routeParams.action) < 0 && !$rootScope.authenticated && !user) {
-                                $location.path(loginRoute);
-                                $rootScope.menuItemAtual = $location.path().substring(1);
-                                return lazyDeferred.promise;
-                            }
-
-                            var template = 'view/' + $routeParams.action;// + "?_t=" + (new Date()).getTime();
-                            var js = 'js/controllers/' + $routeParams.action + '.js';// + "?_t=" + (new Date()).getTime();
-
-                            // @TODO try eliminate this if else
-                            if(routesWithoutJs.indexOf($routeParams.action) >= 0) {
-                                js = $routeParams.action; // + '.js' + "?_t=" + (new Date()).getTime();
-                                template = 'view/' + $routeParams.action;// + "?_t=" + (new Date()).getTime();
-                                $ocLazyLoad.load(js).then(function (a) {
-                                    $templateRequest(template).then(function(html) {
+                            switch(true) {
+                                case !route.controller && !route.template:
+                                    throw new Error("Route controller and template not found. (" + routesProvider.getActual() + ")");
+                                    break;
+                                case !route.controller:
+                                    $templateRequest(route.template).then(function(html) {
                                         var tpl = angular.element(html);
                                         $('#ng-view').html(tpl);
                                         $compile(tpl)($scope);
                                     });
-                                });
-                            } else {
-                                $ocLazyLoad.load(js).then(function (a) {
-                                    $templateRequest(template).then(function(html) {
-                                        var tpl = angular.element(html);
-                                        $('#ng-view').html(tpl);
-                                        $compile(tpl)($scope);
+                                    break;
+                                case !route.template:
+                                    $ocLazyLoad.load(route.controller).then(function (module) {
                                     });
-                                });
-
+                                    break;
+                                default:
+                                    $ocLazyLoad.load(route.controller).then(function (module) {
+                                        $templateRequest(route.template).then(function(html) {
+                                            var tpl = angular.element(html);
+                                            $('#ng-view').html(tpl);
+                                            $compile(tpl)($scope);
+                                        });
+                                    });
                             }
 
                             return lazyDeferred.promise;
@@ -327,8 +313,6 @@ require([
                 }
             });
             
-            
-
             /**
              * Date Format View Helper
              */
@@ -340,10 +324,6 @@ require([
                         return moment(input, fromDate).format(toDate);
                     }
                     return moment(input).format(toDate);
-                    // var _date = $filter('date')(new Date(input), 'MM dd yyyy');
-                    //
-                    // return _date.toUpperCase();
-
                 };
             });
 

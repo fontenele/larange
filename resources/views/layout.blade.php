@@ -30,17 +30,14 @@
                 
                 <div id="navbar-top" class="collapse navbar-collapse">
                     <menu ng-show="authenticated" items="menu" location=''></menu>
-                    <!--p class="navbar-text navbar-right">
-                        <a ng-show="authenticated" ng-click="menuItem('auth|login', true)" href="javascript:void(0)" class="navbar-link">Sair</a>
-                    </p-->
                     <ul class="nav navbar-nav navbar-right">
-                        <li ng-hide="authenticated" ng-click="menuItem('auth|login')"><a href="javascript:void(0)">Entrar</a></li>
+                        <li ng-hide="authenticated" ng-click="menuItem('login')"><a href="javascript:void(0)">Entrar</a></li>
                         <li ng-show="authenticated" class="dropdown">
                             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><% currentUser.name %> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li ng-click="menuItem('admin')"><a href="javascript:void(0)">Admin Panel</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li ng-click="menuItem('auth|login', true)"><a href="javascript:void(0)">Sair</a></li>
+                                <li ng-click="menuItem('login', true)"><a href="javascript:void(0)">Sair</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -55,7 +52,7 @@
                     <menu items="menu" location='nav-pills nav-stacked"'></menu>
                 </div>
                 <div ng-class="container_class">
-                    <!-- @TODO FAZER DIRECTIVE -->
+                    <!-- @TODO FAZER DIRECTIVE breadcrumb -->
                     <ol class="breadcrumb" ng-show="authenticated">
                         <li><a ng-click="menuItem('home')" href="javascript:void(0)">Home</a></li>
                         <li><a ng-click="menuItem('view1')" href="javascript:void(0)">View1</a></li>

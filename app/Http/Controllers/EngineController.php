@@ -11,34 +11,34 @@ class EngineController extends Controller {
         // @TODO CRUD FOR THIS
         return [
             "login" => [
-                'json' => 'login',
+                'json' => '/login',
                 'url' => 'login',
                 'controller' => 'js/controllers/auth/login.js',
                 'template' => 'view/auth/login'
             ],
             'home' => [
-                'json' => 'home',
+                'json' => '/home',
                 'url' => 'home',
                 'controller' => 'js/controllers/home.js',
                 'template' => 'view/home'
             ],
             'view1' => [
-                'json' => 'view1',
+                'json' => '/view1',
                 'url' => 'view1',
-                'controller' => '',
-                'template' => ''
+                'controller' => 'js/controllers/view1.js',
+                'template' => 'view/view1'
             ],
             'admin' => [
-                'json' => 'admin',
+                'json' => '/admin',
                 'url' => 'admin',
-                'controller' => '',
-                'template' => ''
+                'controller' => 'js/controllers/admin.js',
+                'template' => 'view/admin'
             ],
             'users' => [
-                'json' => 'users',
+                'json' => '/admin/users',
                 'url' => 'users',
-                'controller' => '',
-                'template' => ''
+                'controller' => 'js/controllers/users.js',
+                'template' => 'view/users'
             ]
         ];
     }
@@ -50,25 +50,5 @@ class EngineController extends Controller {
 
         return '<div>Template ' . $template . ' dont exists!</div>';
     }
-
-    public function js($file) {
-        dd($file);
-        header("Content-type: text/javascript");
-
-        $module = implode('/', explode('|', $module));
-        $js = public_path() . "/js/controllers/{$module}";
-
-        if($file) {
-            $js.= "/{$file}";
-        }
-
-        if(file_exists($js)) {
-            print file_get_contents($js);
-        } else {
-            echo 'console.log("JS file ' . $js . ' dont exists!")';
-        }
-        exit(0);
-    }
-
 
 }
