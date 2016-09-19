@@ -34,12 +34,30 @@ class EngineController extends Controller {
                 'controller' => 'js/controllers/admin.js',
                 'template' => 'view/admin'
             ],
+            'users/edit/:id' => [
+                'json' => '/admin/users/edit/:id',
+                'url' => 'users/edit/:id',
+                'controller' => 'js/controllers/users-edit.js',
+                'template' => 'view/users-edit'
+            ],
             'users' => [
                 'json' => '/admin/users',
                 'url' => 'users',
                 'controller' => 'js/controllers/users.js',
                 'template' => 'view/users'
-            ]
+            ],
+            'groups/edit/:id' => [
+                'json' => '/admin/groups/:id',
+                'url' => 'groups/edit',
+                'controller' => 'js/controllers/groups-edit.js',
+                'template' => 'view/groups-edit'
+            ],
+            'groups' => [
+                'json' => '/admin/groups',
+                'url' => 'groups',
+                'controller' => 'js/controllers/groups.js',
+                'template' => 'view/groups'
+            ],
         ];
     }
 

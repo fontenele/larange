@@ -60,6 +60,7 @@ require([
     // var authRoute = '/api/authenticate';
     
     angular.module('Routing', [])
+        // routesProvider
         .provider('routes', function() {
             this.$get = function() {
                 return {
@@ -83,9 +84,51 @@ require([
             };
             this.getRoute = function(route) {
                 if(route) {
-                    return this.routes[route];
+                    if(this.routes[route]) {
+                        return this.routes[route];
+                    }
                 }
-                return this.routes[this.getActual()];
+                if(this.routes[this.getActual()]) {
+                    return this.routes[this.getActual()];
+                }
+                var _actual = this.getActual().split('/');
+                var _validMax = _actual.length; // max deep validate
+                var that = this;
+                
+                for(i in this.routes) {
+                    var _replaces = {};
+                    var _valided = 0; // actual deep validation
+                    var _route2return = that.routes[i];
+                    var _route = i.split('/');
+                    
+                    if(_route.length != _validMax) {
+                        continue;
+                    }
+                    
+                    for(var j=0;j<_validMax;j++) {
+                        if(_route[j] == _actual[j]) {
+                            _valided++;
+                        }
+                        if(_route[j].substr(0,1) == ':') {
+                            _replaces[_route[j]] = _actual[j];
+                            for(k in _route2return) {
+                                if(typeof _route2return[k] != 'string') {
+                                    continue;
+                                }
+                                _route2return[k] = _route2return[k].replace(_route[j], _actual[j]);
+                            }
+                            
+                            _valided++;
+                        }
+                    }
+                    
+                    if(_valided == _validMax) {
+                        _route2return['vars'] = _replaces;
+                        return _route2return;
+                    }
+                }
+                
+                return {};
             };
         });
     
@@ -118,6 +161,7 @@ require([
             mainApp.config(function($routeProvider, $ocLazyLoadProvider, $interpolateProvider, $authProvider, $httpProvider, $provide, routesProvider) {
                 // Define routes
                 routesProvider.setRoutes(routes);
+                // console.log(routesProvider, 'routesProvider', routes);
 
                 /**
                  * HTTP Request Interceptor
@@ -186,13 +230,14 @@ require([
                 });
 
                 $routeProvider
-                    .when('/:action', {
+                    .when('/:action*', {
                         template: '',
                         controller: function($rootScope, $scope, $routeParams, $ocLazyLoad, $q, $http, $compile, $templateRequest, $location, router) {
                             var lazyDeferred = $q.defer();
                             
                             routesProvider.actual = $routeParams.action;
                             var route = routesProvider.getRoute();
+                            console.log('when action', route, routesProvider);
 
                             // Get User from storage
                             var user = JSON.parse(localStorage.getItem('user'));
@@ -301,6 +346,7 @@ require([
                     },
                     link: function($rootScope, $scope, $element) {
                         $rootScope.menuLink = function() {
+                            console.log("click link", this.item.url);
                             $location.path(this.item.url);
                         };
                     },
@@ -340,6 +386,7 @@ require([
                         // Remove User from storage
                         localStorage.removeItem('user');
                     }
+                    console.log("principalcontroller menuitem click", url);
                     $location.path(url);
                 };
             });

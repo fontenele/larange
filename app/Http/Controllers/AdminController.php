@@ -40,8 +40,9 @@ class AdminController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function editUser() {
+	public function editUser($id) {
 		return [
+		    'aeee' => $id
 //            'user' => User::all()->toArray()
         ];
 	}
