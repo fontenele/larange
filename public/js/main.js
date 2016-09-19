@@ -1,3 +1,6 @@
+var clone = function (obj) {
+    return JSON.parse(JSON.stringify(obj));
+};
 /**
  * Configure Lib paths
  */
@@ -98,7 +101,7 @@ require([
                 for(i in this.routes) {
                     var _replaces = {};
                     var _valided = 0; // actual deep validation
-                    var _route2return = that.routes[i];
+                    var _route2return = clone(that.routes[i]);
                     var _route = i.split('/');
                     
                     if(_route.length != _validMax) {

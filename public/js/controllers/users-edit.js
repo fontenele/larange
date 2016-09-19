@@ -9,6 +9,7 @@ define([], function() {
 
         router.getJson().then(function(data) {
             console.log(data);
+            $scope.cod = data.user;
         });
     });
 

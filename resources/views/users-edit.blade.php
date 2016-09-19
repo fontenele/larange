@@ -1,5 +1,5 @@
 <div data-ng-controller="UsersEditController">
 
-    EDIT USER
+    EDIT USER <% cod %>
 
 </div>
