@@ -18,6 +18,7 @@
         
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
+                <button ng-click="cancelar()" type="button" class="btn btn-default">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </div>

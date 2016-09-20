@@ -24,6 +24,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/', 'AdminController@home');
     Route::get('users', 'AdminController@users');
     Route::get('users/edit/{id?}', 'AdminController@editUser');
+    Route::post('users/remove/{id}', 'AdminController@removeUser');
     Route::post('users/save', 'AdminController@saveUser');
 });
     

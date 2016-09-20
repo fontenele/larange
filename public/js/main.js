@@ -12,6 +12,12 @@ require.config({
         'jquery': '../vendor/jquery/dist/jquery.min',
         //plugins
         'loading': 'plugins/loading',
+        //noty
+        'noty': '../vendor/noty/js/noty/packaged/jquery.noty.packaged.min',
+        'noty-layout-center': '../vendor/noty/js/noty/layouts/center',
+        'noty-layout-top': '../vendor/noty/js/noty/layouts/top',
+        'noty-layout-bottom': '../vendor/noty/js/noty/layouts/bottom',
+        'noty-theme-relax': '../vendor/noty/js/noty/themes/relax',
         //bootstrap
         'bootstrap': '../vendor/bootstrap/dist/js/bootstrap.min',
         // angular
@@ -41,7 +47,9 @@ require.config({
         'ocLazyLoad': ['angular'],
         'bootstrap': ['angular'],
         'satellizer': ['angular'],
-        'momentLocales': ['momentLocalesAll']
+        'momentLocales': ['momentLocalesAll'],
+        'noty': ['jquery'],
+        'noty-theme-relax': ['noty']
     },
     packages: {
     }
@@ -58,7 +66,7 @@ require([
     'momentLocales'
 ], function(moment) {
     // @TODO ver essas variaveis, nao pode ter elas
-    var loginRoute = 'auth|login';
+    var loginRoute = '/login';
     var authRoute = '/oauth/access_token';
     // var authRoute = '/api/authenticate';
     
@@ -158,6 +166,12 @@ require([
     });
     
     angular.element(document).ready(function($http) {
+        require([
+            'noty-theme-relax'
+        ], function () {
+            $.noty.defaults.theme = 'relax';
+        });
+        
         // Get routes
         $http.get('routes').then(function (routes) {
 

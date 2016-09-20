@@ -2,7 +2,6 @@
 
 use App\User;
 use Illuminate\Support\Facades\Input;
-use League\Flysystem\Exception;
 
 class AdminController extends Controller {
 
@@ -66,7 +65,7 @@ class AdminController extends Controller {
             $user->password = \Hash::make('secret');
             
             if(!$user->save()) {
-                throw new Exception('Erro ao salvar usuário.');
+                throw new \Exception('Erro ao salvar usuário.');
             }
             
             return [
@@ -74,12 +73,32 @@ class AdminController extends Controller {
                 'status' => 'success',
                 'message' => 'Usuário salvo com sucesso.'
             ];
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
             return [
                 'status' => 'error',
                 'message' => $e->getMessage()
             ];
         }
 	}
+
+    /**
+     * Remover Usuário
+     *
+     * @return Response
+     */
+    public function removeUser($id) {
+        try {
+            User::destroy($id);
+            return [
+                'status' => 'success',
+                'message' => 'Usuário removido com sucesso.'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ];
+        }
+    }
 
 }

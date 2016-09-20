@@ -15,8 +15,10 @@
         "text": "2.0.15",
         "requirejs-plugins": "1.0.3",
         "ocLazyLoad": "1.0.9",
-        "satellizer": "latest",
-        "moment": "latest",
-        "angular-moment": "latest"
+        "satellizer": "0.15.5",
+        "moment": "2.10.6",
+        "angular-moment": "0.10.3",
+        "noty": "latest",
+        "animate.css": "latest"
     }
 }

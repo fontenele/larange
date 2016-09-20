@@ -15,13 +15,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in listItems" ng-click="editItem(item)">
-                <td class="text-center"><% item.id %></td>
+            <tr ng-repeat="item in listItems">
+                <td class="text-center"><a href="javascript:void(0)" ng-click="editItem(item)"><% item.id %></a></td>
                 <td><% item.name %></td>
                 <td><% item.email %></td>
                 <td><% item.updated_at | dateFormat : 'DD/MM/YYYY HH:mm:ss' %></td>
-                <td>
-                    edit remove
+                <td class="text-center">
+                    <a href="javascript:void(0)" ng-click="editItem(item)">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+                    </a>
+                    <a href="javascript:void(0)" ng-click="removeItem(item)">
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                    </a>
                 </td>
             </tr>
         </tbody>
