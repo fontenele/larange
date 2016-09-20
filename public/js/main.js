@@ -150,7 +150,7 @@ require([
             if(!this.getRoutesProvider().getRoute().json) {
                 defer.reject('JSON route not found. (' + this.getRoutesProvider().getActual() + ')');
             }
-            $http.post(this.getRoutesProvider().getRoute().json).success(function(data) {
+            $http.get(this.getRoutesProvider().getRoute().json).success(function(data) {
                 defer.resolve(data);
             });
             return defer.promise;
@@ -240,7 +240,6 @@ require([
                             
                             routesProvider.actual = $routeParams.action;
                             var route = routesProvider.getRoute();
-                            console.log('when action', route, routesProvider);
 
                             // Get User from storage
                             var user = JSON.parse(localStorage.getItem('user'));
@@ -349,7 +348,6 @@ require([
                     },
                     link: function($rootScope, $scope, $element) {
                         $rootScope.menuLink = function() {
-                            console.log("click link", this.item.url);
                             $location.path(this.item.url);
                         };
                     },
@@ -389,7 +387,6 @@ require([
                         // Remove User from storage
                         localStorage.removeItem('user');
                     }
-                    console.log("principalcontroller menuitem click", url);
                     $location.path(url);
                 };
             });

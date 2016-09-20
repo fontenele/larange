@@ -21,6 +21,12 @@ body {
     border-top: 30px solid #D1D1D1;
 }
 
+@media (max-height: 500px) {
+    .footer {
+        display: none;
+    }
+}
+
 
 /* Custom page CSS
 -------------------------------------------------- */

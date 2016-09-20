@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Support\Facades\Input;
+use League\Flysystem\Exception;
 
 class AdminController extends Controller {
 
@@ -40,11 +42,44 @@ class AdminController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function editUser($id) {
+	public function editUser($id = '') {
 		return [
-		    'user' => $id
-//            'user' => User::all()->toArray()
+		    'user' => $id ? User::find($id) : null
         ];
+	}
+	
+	/**
+	 * Salvar Usuário
+	 *
+	 * @return Response
+	 */
+	public function saveUser() {
+	    try {
+            $post = Input::all();
+            if($post['id']) {
+                $user = User::find($post['id']);
+            } else {
+                $user = new User;
+            }
+            $user->name = $post['name'];
+            $user->email = $post['email'];
+            $user->password = \Hash::make('secret');
+            
+            if(!$user->save()) {
+                throw new Exception('Erro ao salvar usuário.');
+            }
+            
+            return [
+                'user' => $user,
+                'status' => 'success',
+                'message' => 'Usuário salvo com sucesso.'
+            ];
+        }catch (Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ];
+        }
 	}
 
 }

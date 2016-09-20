@@ -12,6 +12,10 @@ define([], function() {
             $scope.editItem = function(item) {
                 $location.path('users/edit/' + item.id);
             };
+            
+            $scope.novo = function() {
+                $location.path('users/edit');
+            };
         });
     });
 

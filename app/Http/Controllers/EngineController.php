@@ -40,6 +40,12 @@ class EngineController extends Controller {
                 'controller' => 'js/controllers/users-edit.js',
                 'template' => 'view/users-edit'
             ],
+            'users/edit' => [
+                'json' => '/admin/users/edit',
+                'url' => 'users/edit',
+                'controller' => 'js/controllers/users-edit.js',
+                'template' => 'view/users-edit'
+            ],
             'users' => [
                 'json' => '/admin/users',
                 'url' => 'users',
