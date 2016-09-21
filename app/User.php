@@ -31,4 +31,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    public function roles() {
+        return $this->belongsToMany(Roles::class);
+    }
+
+    public function hasRole($role) {
+        if(is_string($role)) {
+            return $this->roles->contains('name', $role);
+        }
+        return !! $role->intersect($this->roles)->count();
+    }
+
+    public function assign($role) {
+        if(is_string($role)) {
+            return $this->roles()->save(Role::whereName($role)->firstOrFail());
+        }
+        return $this->roles()->save($role);
+    }
+
 }
