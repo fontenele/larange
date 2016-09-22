@@ -16,13 +16,8 @@ Route::get('/', 'WelcomeController@index');
 Route::get('view/{template}', 'EngineController@view')->where('template', '.+');
 Route::get('routes', 'EngineController@routes');
 
-//Route::get('home', 'HomeController@home')->middleware('roles');
-Route::get('home', [
-    'uses' => 'HomeController@home',
-    'as' => 'home',
-    'middleware' => 'roles',
-    'roles' => ['admin']
-]);
+Route::get('home', 'HomeController@home')->middleware('permission:home');
+
 Route::get('view1', 'HomeController@view1');
 
 // Module admin
@@ -58,6 +53,7 @@ Route::post('oauth/user', ['before' => 'oauth', function() {
     $user->updated_at = new DateTime();
     $user->update();
     
+    $user->password = '';
     \Session::set('user', $user);
     
     return Response::json($user);

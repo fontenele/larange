@@ -69,4 +69,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->roles()->save($role);
     }
 
+    public function hasPermission($permission) {
+        foreach($this->roles()->get() as $role) {
+            if($role->hasPermission($permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

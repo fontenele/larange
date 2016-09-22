@@ -12,4 +12,13 @@ class Roles extends Model {
         return $this->permissions()->save($permission);
 	}
 
+    public function hasPermission($permission) {
+        foreach($this->permissions()->get() as $_permission) {
+            if($_permission->name == $permission) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
