@@ -70,12 +70,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function hasPermission($permission) {
-        foreach($this->roles()->get() as $role) {
-            if($role->hasPermission($permission)) {
-                return true;
-            }
+        if(\Session::get('user-p')->intersect($permission)->count() > 0) {
+            return true;
         }
         return false;
+    }
+
+    public function permissions() {
+        $permissions = collect();
+        foreach($this->roles()->get() as $role) {
+            foreach($role->permissions()->get() as $permission) {
+                $permissions->push($permission->name);
+            }
+        }
+        return $permissions;
     }
 
 }

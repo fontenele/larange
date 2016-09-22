@@ -55,6 +55,7 @@ Route::post('oauth/user', ['before' => 'oauth', function() {
     
     $user->password = '';
     \Session::set('user', $user);
+    \Session::set('user-p', $user->permissions());
     
     return Response::json($user);
 }]);
