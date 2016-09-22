@@ -16,7 +16,13 @@ Route::get('/', 'WelcomeController@index');
 Route::get('view/{template}', 'EngineController@view')->where('template', '.+');
 Route::get('routes', 'EngineController@routes');
 
-Route::get('home', 'HomeController@home');
+//Route::get('home', 'HomeController@home')->middleware('roles');
+Route::get('home', [
+    'uses' => 'HomeController@home',
+    'as' => 'home',
+    'middleware' => 'roles',
+    'roles' => ['admin']
+]);
 Route::get('view1', 'HomeController@view1');
 
 // Module admin
@@ -51,5 +57,8 @@ Route::post('oauth/user', ['before' => 'oauth', function() {
     // update last login
     $user->updated_at = new DateTime();
     $user->update();
+    
+    \Session::set('user', $user);
+    
     return Response::json($user);
 }]);

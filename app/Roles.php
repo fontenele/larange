@@ -9,7 +9,7 @@ class Roles extends Model {
 	}
 
     public function assign(Permissions $permission) {
-        $this->permissions()->save($permission);
+        return $this->permissions()->save($permission);
 	}
 
 }

@@ -25,22 +25,22 @@ class CreateRolesTable extends Migration {
             $table->timestamps();
         });
         
-        Schema::create('permission_role', function(Blueprint $table) {
-            $table->integer('role_id')->unsigned();
-            $table->integer('permission_id')->unsigned();
+        Schema::create('permissions_roles', function(Blueprint $table) {
+            $table->integer('roles_id')->unsigned();
+            $table->integer('permissions_id')->unsigned();
             
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
-            $table->primary(['role_id', 'permission_id']);
+            $table->foreign('roles_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('permissions_id')->references('id')->on('permissions')->onDelete('cascade');
+            $table->primary(['roles_id', 'permissions_id']);
         });
         
-        Schema::create('role_user', function(Blueprint $table) {
-            $table->integer('role_id')->unsigned();
+        Schema::create('roles_user', function(Blueprint $table) {
+            $table->integer('roles_id')->unsigned();
             $table->integer('user_id')->unsigned();
             
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('roles_id')->references('id')->on('roles')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->primary(['role_id', 'user_id']);
+            $table->primary(['roles_id', 'user_id']);
         });
 	}
 
@@ -52,6 +52,8 @@ class CreateRolesTable extends Migration {
 	public function down() {
 		Schema::drop('roles');
         Schema::drop('permissions');
+        Schema::drop('permissions_roles');
+        Schema::drop('role_user');
 	}
 
 }

@@ -35,16 +35,36 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany(Roles::class);
     }
 
-    public function hasRole($role) {
-        if(is_string($role)) {
-            return $this->roles->contains('name', $role);
+    public function hasAnyRole($roles) {
+        if(is_array($roles)) {
+            foreach ($roles as $role) {
+                if($this->hasRole($role)) {
+                    return true;
+                }
+            }
+        } else {
+            if($this->hasRole($roles)) {
+                return true;
+            }
         }
-        return !! $role->intersect($this->roles)->count();
+        return false;
+    }
+
+    public function hasRole($role) {
+        if($this->roles()->where('name', $role)->first()) {
+            return true;
+        }
+        
+        return false;
+//        if(is_string($role)) {
+//            return $this->roles->contains('name', $role);
+//        }
+//        return !! $role->intersect($this->roles)->count();
     }
 
     public function assign($role) {
         if(is_string($role)) {
-            return $this->roles()->save(Role::whereName($role)->firstOrFail());
+            return $this->roles()->save(Roles::whereName($role)->firstOrFail());
         }
         return $this->roles()->save($role);
     }
