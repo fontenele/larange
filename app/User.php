@@ -70,7 +70,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function hasPermission($permission) {
-        if(\Session::get('user-p')->intersect($permission)->count() > 0) {
+        if(\Session::get('user-p')->contains($permission)) {
             return true;
         }
         return false;
