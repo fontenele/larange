@@ -384,7 +384,6 @@ require([
             mainApp.directive("paginator", function ($compile) {
                 var maxPaginationItems = 5;
                 return {
-                    // replace: true,
                     scope: {
                         current: '@current',
                         maxpages: '@maxpages',
@@ -394,6 +393,18 @@ require([
                     link: function($rootScope, $scope, $element) {
                         $rootScope.linkpaginate = function(page, current, maxpages, perpage) {
                             $rootScope.callback()({page: page, current: current, maxpages: maxpages, perpage: perpage});
+                        };
+                        $rootScope.linkpaginateprevious = function(current, maxpages, perpage) {
+                            if(current == 1) {
+                                return;
+                            }
+                            $rootScope.callback()({page: (parseInt(current)-1), current: current, maxpages: maxpages, perpage: perpage});
+                        };
+                        $rootScope.linkpaginatenext = function(current, maxpages, perpage) {
+                            if(current == maxpages) {
+                                return;
+                            }
+                            $rootScope.callback()({page: (parseInt(current)+1), current: current, maxpages: maxpages, perpage: perpage});
                         };
                         $rootScope.getPaginatorItems = function(current, maxpages) {
                             if(!current || !maxpages) {
@@ -408,19 +419,51 @@ require([
                             var min = (current > halfItems) ? (current+1) - halfItems : 1;
                             if((max+1) - min < maxPaginationItems) {
                                 min-= maxPaginationItems - ((max+1) - min);
+                                if(min == 0) {
+                                    min = 1;
+                                }
+                            }
+                            
+                            if(max > maxpages) {
+                                min = 1;
+                                max = maxpages;
+                            }
+                            
+                            if(min == max) {
+                                return items;
                             }
                             
                             for(var i=min;i<=max;i++) {
                                 items.push(i);
                             }
                             
+                            if(min > 1) {
+                                items.unshift('...');
+                                items.unshift('1');
+                            }
+                            
+                            if(maxpages > max) {
+                                items.push('...');
+                                items.push(maxpages);
+                            }
+
                             return items;
                         }
                     },
                     template: function(element, attrs) {
                         return '<ul class="pagination">' +
-                            '<li ng-repeat="item in getPaginatorItems(current, maxpages)" ng-click="linkpaginate(item, current, maxpages, perpage)"  ng-class="item == current ? \'active\' : \'\' ">' +
+                            '<li  ng-click="linkpaginateprevious(current, maxpages, perpage)">' +
+                                '<a href="javascript:void(0)" aria-label="Previous">' +
+                                    '<span aria-hidden="true">&laquo;</span>' +
+                                '</a>' +
+                            '</li>' +
+                            '<li ng-repeat="item in getPaginatorItems(current, maxpages) track by $index" ng-click="linkpaginate(item, current, maxpages, perpage)"  ng-class="item == current ? \'active\' : \'\' ">' +
                                 '<a href="javascript:void(0)"><% item %></a>' +
+                            '</li>' +
+                            '<li ng-click="linkpaginatenext(current, maxpages, perpage)">' +
+                                '<a href="javascript:void(0)" aria-label="Next">' +
+                                    '<span aria-hidden="true">&raquo;</span>' +
+                                '</a>' +
                             '</li>' +
                         '</ul>'
                     }

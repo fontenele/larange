@@ -17,7 +17,7 @@ body {
     min-height: 110px;
     background-color: #dfdfdf;
     z-index: 1001;
-    padding-top: 10px;
+    /*padding-top: 10px;*/
     border-top: 30px solid #D1D1D1;
 }
 

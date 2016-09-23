@@ -9,6 +9,7 @@ define([], function() {
         
         $scope.getUsersList = function (paginator) {
             var getList = function () {
+                console.log(paginator);
                 router.getJson(paginator).then(function(data) {
                     $scope.list = data.list;
 
