@@ -153,12 +153,19 @@ require([
         this.getRoutesProvider = function() {
             return this.routesProvider;
         };
-        this.getJson = function() {
+        this.getJson = function(data) {
             var defer = $q.defer();
             if(!this.getRoutesProvider().getRoute().json) {
                 defer.reject('JSON route not found. (' + this.getRoutesProvider().getActual() + ')');
             }
-            $http.get(this.getRoutesProvider().getRoute().json).success(function(data) {
+            var url = this.getRoutesProvider().getRoute().json;
+            if(data) {
+                url+= '?';
+                for (key in data) {
+                    url += encodeURIComponent(key)+"="+encodeURIComponent(data[key])+"&";
+                }
+            }
+            $http.get(url).success(function(data) {
                 defer.resolve(data);
             });
             return defer.promise;
@@ -371,6 +378,52 @@ require([
                     '</li>' +
                     '</ul>'
 
+                }
+            });
+            
+            mainApp.directive("paginator", function ($compile) {
+                var maxPaginationItems = 5;
+                return {
+                    // replace: true,
+                    scope: {
+                        current: '@current',
+                        maxpages: '@maxpages',
+                        perpage: '@perpage',
+                        callback: '&'
+                    },
+                    link: function($rootScope, $scope, $element) {
+                        $rootScope.linkpaginate = function(page, current, maxpages, perpage) {
+                            $rootScope.callback()({page: page, current: current, maxpages: maxpages, perpage: perpage});
+                        };
+                        $rootScope.getPaginatorItems = function(current, maxpages) {
+                            if(!current || !maxpages) {
+                                return;
+                            }
+                            
+                            current = parseInt(current);
+                            maxpages = parseInt(maxpages);
+                            var halfItems = Math.ceil(maxPaginationItems / 2);
+                            var items = [];
+                            var max = (current > halfItems) ? ( ((current-1) + halfItems) < maxpages ? ((current-1) + halfItems) : maxpages) : maxPaginationItems;
+                            var min = (current > halfItems) ? (current+1) - halfItems : 1;
+                            if((max+1) - min < maxPaginationItems) {
+                                min-= maxPaginationItems - ((max+1) - min);
+                            }
+                            
+                            for(var i=min;i<=max;i++) {
+                                items.push(i);
+                            }
+                            
+                            return items;
+                        }
+                    },
+                    template: function(element, attrs) {
+                        return '<ul class="pagination">' +
+                            '<li ng-repeat="item in getPaginatorItems(current, maxpages)" ng-click="linkpaginate(item, current, maxpages, perpage)"  ng-class="item == current ? \'active\' : \'\' ">' +
+                                '<a href="javascript:void(0)"><% item %></a>' +
+                            '</li>' +
+                        '</ul>'
+                    }
                 }
             });
             

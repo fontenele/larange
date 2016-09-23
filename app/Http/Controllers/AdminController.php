@@ -31,8 +31,11 @@ class AdminController extends Controller {
 	 * @return Response
 	 */
 	public function users() {
+	    $itemsPerPage = Input::get('perpage') ? Input::get('perpage') : 2;
+        $page = Input::get('page') ? Input::get('page') : 1;
+	    $result = User::paginate($itemsPerPage, null, null, $page);
 		return [
-            'list_items' => User::all()->toArray()
+            'list' => $result->toArray()
         ];
 	}
 

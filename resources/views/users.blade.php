@@ -1,6 +1,6 @@
 <div data-ng-controller="UsersController">
 
-    <button class="btn btn-info" ng-click="novo()">Novo</button>
+    <button class="btn btn-info" ng-click="newItem()">Novo</button>
     <br />
     <br />
 
@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in listItems">
+            <tr ng-repeat="item in list.data">
                 <td class="text-center"><a href="javascript:void(0)" ng-click="editItem(item)"><% item.id %></a></td>
                 <td><% item.name %></td>
                 <td><% item.email %></td>
@@ -31,5 +31,27 @@
             </tr>
         </tbody>
     </table>
+
+    <nav paginator callback="getUsersList" current="<% list.current_page %>" maxpages="<% list.last_page %>" perpage="<% list.per_page %>" class='text-center col-xs-12'></nav>
+
+    <!--nav aria-label="Page navigation" class="text-center">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a href="javascript:void(0);">1</a></li>
+            <li><a href="javascript:void(0);">2</a></li>
+            <li><a href="javascript:void(0);">3</a></li>
+            <li><a href="javascript:void(0);">4</a></li>
+            <li><a href="javascript:void(0);">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav-->
 
 </div>
