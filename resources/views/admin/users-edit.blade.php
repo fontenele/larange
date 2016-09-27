@@ -5,14 +5,14 @@
         <div class="form-group">
             <label class="control-label col-xs-3">Nome</label>
             <div class="col-xs-9">
-                <input class="form-control" ng-model="user.name" />
+                <input class="form-control" ng-model="item.name" />
             </div>
         </div>
         
         <div class="form-group">
             <label class="control-label col-xs-3">E-mail</label>
             <div class="col-xs-9">
-                <input class="form-control" ng-model="user.email" />
+                <input class="form-control" ng-model="item.email" />
             </div>
         </div>
         

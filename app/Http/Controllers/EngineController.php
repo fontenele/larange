@@ -28,42 +28,52 @@ class EngineController extends Controller {
                 'controller' => 'js/controllers/view1.js',
                 'template' => 'view/view1'
             ],
+            
             'admin' => [
                 'json' => '/admin',
                 'url' => 'admin',
-                'controller' => 'js/controllers/admin.js',
-                'template' => 'view/admin'
+                'controller' => 'js/controllers/admin/admin.js',
+                'template' => 'view/admin/admin'
             ],
+            
             'users/edit/:id' => [
                 'json' => '/admin/users/edit/:id',
                 'url' => 'users/edit/:id',
-                'controller' => 'js/controllers/users-edit.js',
-                'template' => 'view/users-edit'
+                'controller' => 'js/controllers/admin/users-edit.js',
+                'template' => 'view/admin/users-edit'
             ],
             'users/edit' => [
                 'json' => '/admin/users/edit',
                 'url' => 'users/edit',
-                'controller' => 'js/controllers/users-edit.js',
-                'template' => 'view/users-edit'
+                'controller' => 'js/controllers/admin/users-edit.js',
+                'template' => 'view/admin/users-edit'
             ],
             'users' => [
                 'json' => '/admin/users',
                 'url' => 'users',
-                'controller' => 'js/controllers/users.js',
-                'template' => 'view/users'
+                'controller' => 'js/controllers/admin/users.js',
+                'template' => 'view/admin/users'
             ],
-            'groups/edit/:id' => [
-                'json' => '/admin/groups/:id',
-                'url' => 'groups/edit',
-                'controller' => 'js/controllers/groups-edit.js',
-                'template' => 'view/groups-edit'
+            
+            'roles/edit/:id' => [
+                'json' => '/admin/roles/edit/:id',
+                'url' => 'roles/edit/edit/:id',
+                'controller' => 'js/controllers/admin/roles-edit.js',
+                'template' => 'view/admin/roles-edit'
             ],
-            'groups' => [
-                'json' => '/admin/groups',
-                'url' => 'groups',
-                'controller' => 'js/controllers/groups.js',
-                'template' => 'view/groups'
+            'roles/edit' => [
+                'json' => '/admin/roles/edit',
+                'url' => 'roles/edit',
+                'controller' => 'js/controllers/admin/roles-edit.js',
+                'template' => 'view/admin/roles-edit'
             ],
+            'roles' => [
+                'json' => '/admin/roles',
+                'url' => 'roles',
+                'controller' => 'js/controllers/admin/roles.js',
+                'template' => 'view/admin/roles'
+            ],
+            
         ];
     }
 

@@ -4,12 +4,12 @@ define([], function() {
     mainApp.controller('UsersController', function($rootScope, $scope, $location, $http, $route, router) {
         $rootScope.menu = [
             {label: 'Painel', url: 'admin', selected: false},
+            {label: 'Perfis', url: 'roles', selected: false},
             {label: 'Usuários', url: 'users', selected: true}
         ];
         
-        $scope.getUsersList = function (paginator) {
+        $scope.getItemsList = function (paginator) {
             var getList = function () {
-                console.log(paginator);
                 router.getJson(paginator).then(function(data) {
                     $scope.list = data.list;
 
@@ -83,7 +83,7 @@ define([], function() {
             }();
         };
 
-        $scope.getUsersList();
+        $scope.getItemsList();
     });
 
 });

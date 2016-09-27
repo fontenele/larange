@@ -409,6 +409,12 @@ require([
                             }
                             $rootScope.callback()({page: (parseInt(current)+1), current: current, maxpages: maxpages, perpage: perpage});
                         };
+                        $rootScope.showOrNot = function(current, maxpages) {
+                            if(parseInt(maxpages) === 1) {
+                                return false;
+                            }
+                            return true;
+                        };
                         $rootScope.getPaginatorItems = function(current, maxpages) {
                             if(!current || !maxpages) {
                                 return;
@@ -454,7 +460,7 @@ require([
                         }
                     },
                     template: function(element, attrs) {
-                        return '<ul class="pagination">' +
+                        return '<ul class="pagination" ng-show="showOrNot(current, maxpages)">' +
                             '<li  ng-click="linkpaginateprevious(current, maxpages, perpage)">' +
                                 '<a href="javascript:void(0)" aria-label="Previous">' +
                                     '<span aria-hidden="true">&laquo;</span>' +

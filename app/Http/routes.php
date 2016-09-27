@@ -23,10 +23,16 @@ Route::get('view1', 'HomeController@view1');
 // Module admin
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/', 'AdminController@home');
-    Route::get('users', 'AdminController@users');
-    Route::get('users/edit/{id?}', 'AdminController@editUser');
-    Route::post('users/remove/{id}', 'AdminController@removeUser');
-    Route::post('users/save', 'AdminController@saveUser');
+    
+    Route::get('users', 'Admin\UsersController@index');
+    Route::get('users/edit/{id?}', 'Admin\UsersController@edit');
+    Route::post('users/remove/{id}', 'Admin\UsersController@destroy');
+    Route::post('users/save', 'Admin\UsersController@save');
+    
+    Route::get('roles', 'Admin\RolesController@index');
+    Route::get('roles/edit/{id?}', 'Admin\RolesController@edit');
+    Route::post('roles/remove/{id}', 'Admin\RolesController@destroy');
+    Route::post('roles/save', 'Admin\RolesController@save');
 });
     
 Route::controllers([

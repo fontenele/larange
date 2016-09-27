@@ -1,21 +1,22 @@
 define(['moment'], function(moment) {
 
     var mainApp = angular.module("mainApp", []);
-    mainApp.controller('UsersEditController', function($rootScope, $scope, $location, $http, $window, router) {
+    mainApp.controller('RolesEditController', function($rootScope, $scope, $location, $http, $window, router) {
         $rootScope.menu = [
             {label: 'Painel', url: 'admin', selected: false},
-            {label: 'Usuários', url: 'users', selected: true}
+            {label: 'Perfis', url: 'roles', selected: true},
+            {label: 'Usuários', url: 'users', selected: false}
         ];
 
         router.getJson().then(function(data) {
-            $scope.user = data.user;
-            
+            $scope.item = data.item;
+
             $scope.save = function () {
-                var user = $scope.user;
-                if(!user.id) {
-                    user.id = '';
+                var item = $scope.item;
+                if(!item.id) {
+                    item.id = '';
                 }
-                $http.post('admin/users/save', user).success(function (data) {
+                $http.post('admin/roles/save', item).success(function (data) {
                     if(data.status == 'success') {
                         noty({
                             layout: 'center',
@@ -28,7 +29,7 @@ define(['moment'], function(moment) {
                                 speed: 500
                             }
                         });
-                        $location.path('users');
+                        $location.path('roles');
                         return;
                     }
 
