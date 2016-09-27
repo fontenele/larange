@@ -16,7 +16,8 @@ Route::get('/', 'WelcomeController@index');
 Route::get('view/{template}', 'EngineController@view')->where('template', '.+');
 Route::get('routes', 'EngineController@routes');
 
-Route::get('home', 'HomeController@home')->middleware('permission:home');
+Route::get('home', 'HomeController@home')
+    ->middleware('permission:home'); // ACL
 
 Route::get('view1', 'HomeController@view1');
 
@@ -33,6 +34,8 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('roles/edit/{id?}', 'Admin\RolesController@edit');
     Route::post('roles/remove/{id}', 'Admin\RolesController@destroy');
     Route::post('roles/save', 'Admin\RolesController@save');
+    Route::get('roles/{id}/permissions', 'Admin\RolesController@permissions');
+    Route::post('roles/{id}/permissions/save', 'Admin\RolesController@savePermissions');
 });
     
 Route::controllers([
