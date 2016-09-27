@@ -4,6 +4,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Roles extends Model {
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function permissions() {
         return $this->belongsToMany(Permissions::class);
 	}

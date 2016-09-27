@@ -28,14 +28,14 @@ class EngineController extends Controller {
                 'controller' => 'js/controllers/view1.js',
                 'template' => 'view/view1'
             ],
-            
+            // Admin Module
             'admin' => [
                 'json' => '/admin',
                 'url' => 'admin',
                 'controller' => 'js/controllers/admin/admin.js',
                 'template' => 'view/admin/admin'
             ],
-            
+            // Users
             'users/edit/:id' => [
                 'json' => '/admin/users/edit/:id',
                 'url' => 'users/edit/:id',
@@ -54,7 +54,7 @@ class EngineController extends Controller {
                 'controller' => 'js/controllers/admin/users.js',
                 'template' => 'view/admin/users'
             ],
-            
+            // Roles
             'roles/edit/:id' => [
                 'json' => '/admin/roles/edit/:id',
                 'url' => 'roles/edit/edit/:id',
@@ -72,6 +72,12 @@ class EngineController extends Controller {
                 'url' => 'roles',
                 'controller' => 'js/controllers/admin/roles.js',
                 'template' => 'view/admin/roles'
+            ],
+            'roles/:id/permissions' => [
+                'json' => '/admin/roles/:id/permissions',
+                'url' => 'roles/:id/permissions',
+                'controller' => 'js/controllers/admin/permissions.js',
+                'template' => 'view/admin/permissions'
             ],
             
         ];

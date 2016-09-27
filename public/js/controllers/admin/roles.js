@@ -17,6 +17,10 @@ define([], function() {
                         $location.path('roles/edit/' + item.id);
                     };
 
+                    $scope.viewPermissions = function(item) {
+                        $location.path('roles/' + item.id + '/permissions');
+                    };
+
                     $scope.removeItem = function(item) {
                         noty({
                             layout: 'center',

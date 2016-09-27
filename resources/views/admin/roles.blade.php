@@ -10,6 +10,7 @@
                 <th class="text-center">Cod</th>
                 <th>Nome</th>
                 <th>Descrição</th>
+                <th class="text-center">Permissões</th>
                 <th></th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
                 <td class="text-center"><a href="javascript:void(0)" ng-click="editItem(item)"><% item.id %></a></td>
                 <td><% item.name %></td>
                 <td><% item.label %></td>
+                <td class="text-center"><a href="javascript:void(0)" class="badge badge-default" ng-click="viewPermissions(item)"><% item.permissions %></a></td>
                 <td class="text-center">
                     <a href="javascript:void(0)" ng-click="editItem(item)">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
