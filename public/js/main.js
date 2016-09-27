@@ -392,6 +392,9 @@ require([
                     },
                     link: function($rootScope, $scope, $element) {
                         $rootScope.linkpaginate = function(page, current, maxpages, perpage) {
+                            if(current == page) {
+                                return;
+                            }
                             $rootScope.callback()({page: page, current: current, maxpages: maxpages, perpage: perpage});
                         };
                         $rootScope.linkpaginateprevious = function(current, maxpages, perpage) {
