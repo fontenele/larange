@@ -23,7 +23,7 @@ class RolesController extends Controller {
      * @return array
      */
     public function index() {
-        $itemsPerPage = Input::get('perpage') ? Input::get('perpage') : 2;
+        $itemsPerPage = Input::get('perpage') ? Input::get('perpage') : 5;
         $page = Input::get('page') ? Input::get('page') : 1;
         $result = Roles::paginate($itemsPerPage, null, null, $page);
         

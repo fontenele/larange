@@ -22,7 +22,7 @@ class UsersController extends Controller  {
      * @return array
      */
     public function index() {
-        $itemsPerPage = Input::get('perpage') ? Input::get('perpage') : 25;
+        $itemsPerPage = Input::get('perpage') ? Input::get('perpage') : 10;
         $page = Input::get('page') ? Input::get('page') : 1;
         $result = User::paginate($itemsPerPage, null, null, $page);
 
