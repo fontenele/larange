@@ -34,7 +34,7 @@ define([], function() {
                                         $noty.close();
                                         $http.post('admin/roles/remove/' + item.id).success(function (data) {
                                             if(data.status == 'success') {
-                                                noty({
+                                                var n = noty({
                                                     layout: 'center',
                                                     type: 'success',
                                                     text: data.message,
@@ -45,6 +45,9 @@ define([], function() {
                                                         speed: 500
                                                     }
                                                 });
+                                                setTimeout(function () {
+                                                    n.close();
+                                                }, 3000);
                                                 $route.reload();
                                                 return;
                                             }

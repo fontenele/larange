@@ -9,8 +9,10 @@ define([], function() {
         ];
 
         /**
+         * 
          * @TODO Noty ao salvar, colocar timeout, esta muito chato
          * @TODO Na tela de editar usuarios, colocar lista semelhante a lista de permissões, para ativar/desativar perfis
+         * 
          */
         
         $scope.getItemsList = function (paginator) {
@@ -20,6 +22,10 @@ define([], function() {
 
                     $scope.editItem = function(item) {
                         $location.path('users/edit/' + item.id);
+                    };
+
+                    $scope.viewRole = function (role) {
+                        $location.path('roles/' + role.id +  '/permissions');
                     };
 
                     $scope.removeItem = function(item) {
@@ -35,7 +41,7 @@ define([], function() {
                                         $noty.close();
                                         $http.post('admin/users/remove/' + item.id).success(function (data) {
                                             if(data.status == 'success') {
-                                                noty({
+                                                var n = noty({
                                                     layout: 'center',
                                                     type: 'success',
                                                     text: data.message,
@@ -46,6 +52,9 @@ define([], function() {
                                                         speed: 500
                                                     }
                                                 });
+                                                setTimeout(function () {
+                                                    n.close();
+                                                }, 3000);
                                                 $route.reload();
                                                 return;
                                             }

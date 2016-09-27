@@ -63,7 +63,7 @@ class RolesController extends Controller {
         foreach ($actives as $active) {
             $activesParsed[$active['name']] = $active;
         }
-            
+        
         return [
             'role' => $role->toArray(),
             'list' => $permissionsParsed,
@@ -123,7 +123,7 @@ class RolesController extends Controller {
             $roles[] = preg_replace(["/active\[/", "/\]/"], "",  $item['name']);
         }
         
-        $role = Roles::find($id)->permissions()->sync($roles);
+        Roles::find($id)->permissions()->sync($roles);
         return [
             'status' => 'success',
             'message' => 'Permissões salvas com sucesso.'

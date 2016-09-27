@@ -10,15 +10,18 @@ define(['moment'], function(moment) {
 
         router.getJson().then(function(data) {
             $scope.item = data.item;
+            $scope.list = data.roles;
+            $scope.actives = data.actives;
             
-            $scope.save = function () {
+            $scope.save = function ($event) {
                 var item = $scope.item;
                 if(!item.id) {
                     item.id = '';
                 }
+                item.items = $($event.target).serializeArray();
                 $http.post('admin/users/save', item).success(function (data) {
                     if(data.status == 'success') {
-                        noty({
+                        var n = noty({
                             layout: 'center',
                             type: 'success',
                             text: data.message,
@@ -29,6 +32,9 @@ define(['moment'], function(moment) {
                                 speed: 500
                             }
                         });
+                        setTimeout(function () {
+                            n.close();
+                        }, 3000);
                         $location.path('users');
                         return;
                     }

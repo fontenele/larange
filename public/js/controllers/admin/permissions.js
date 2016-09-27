@@ -20,7 +20,7 @@ define(['moment'], function(moment) {
                         items: items
                     }).success(function (data) {
                         if (data.status == 'success') {
-                            noty({
+                            var n = noty({
                                 layout: 'center',
                                 type: 'success',
                                 text: data.message,
@@ -31,6 +31,9 @@ define(['moment'], function(moment) {
                                     speed: 500
                                 }
                             });
+                            setTimeout(function () {
+                                n.close();
+                            }, 3000);
                             $location.path('roles');
                             return;
                         }
