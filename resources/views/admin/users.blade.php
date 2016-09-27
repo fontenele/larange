@@ -10,6 +10,7 @@
                 <th class="text-center">Cod</th>
                 <th>Nome</th>
                 <th>Email</th>
+                <th>Perfis</th>
                 <th>Últ. Login</th>
                 <th></th>
             </tr>
@@ -19,6 +20,7 @@
                 <td class="text-center"><a href="javascript:void(0)" ng-click="editItem(item)"><% item.id %></a></td>
                 <td><% item.name %></td>
                 <td><% item.email %></td>
+                <td><span class="badge" ng-repeat="role in item.roles"><% role.name %></span></td>
                 <td><% item.updated_at | dateFormat : 'DD/MM/YYYY HH:mm:ss' %></td>
                 <td class="text-center">
                     <a href="javascript:void(0)" ng-click="editItem(item)">

@@ -25,17 +25,22 @@ class RolesController extends Controller {
     public function index() {
         $itemsPerPage = Input::get('perpage') ? Input::get('perpage') : 2;
         $page = Input::get('page') ? Input::get('page') : 1;
-        $result = Roles::paginate($itemsPerPage, null, null, $page)->toArray();
+        $result = Roles::paginate($itemsPerPage, null, null, $page);
         
-        foreach ($result['data'] as &$data) {
-            $data['permissions'] = Roles::find($data['id'])->permissions->count();
+        foreach ($result->items() as &$role) {
+            $role->total_permissions = $role->permissions->count();
         }
         
         return [
-            'list' => $result
+            'list' => $result->toArray()
         ];
     }
 
+    /**
+     * List permissions to assing in a Role
+     * @param $id
+     * @return array
+     */
     public function permissions($id) {
         $permissions = Permissions::all()->toArray();
         $permissionsParsed = [];

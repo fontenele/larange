@@ -22,9 +22,14 @@ class UsersController extends Controller  {
      * @return array
      */
     public function index() {
-        $itemsPerPage = Input::get('perpage') ? Input::get('perpage') : 2;
+        $itemsPerPage = Input::get('perpage') ? Input::get('perpage') : 25;
         $page = Input::get('page') ? Input::get('page') : 1;
         $result = User::paginate($itemsPerPage, null, null, $page);
+
+        foreach ($result->items() as &$item) {
+            $item->total_roles = $item->roles->count();
+        }
+        
         return [
             'list' => $result->toArray()
         ];
