@@ -20,5 +20,8 @@
         "angular-moment": "0.10.3",
         "noty": "latest",
         "animate.css": "latest"
+    },
+    "resolutions": {
+        "angular": "1.4.12"
     }
 }
