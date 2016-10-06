@@ -12,8 +12,8 @@
 ### Install
 
 #### Create project via composer
-* composer create-project fontenele/larange larange
-* php artisan migrate --seed
+* `$ composer create-project fontenele/larange larange`
+* `$ php artisan init-db`
 
 #### Clone and install manually
 * Clone repository `$ git clone https://github.com/fontenele/larange.git && cd larange`

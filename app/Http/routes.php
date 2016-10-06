@@ -16,8 +16,7 @@ Route::get('/', 'WelcomeController@index');
 Route::get('view/{template}', 'EngineController@view')->where('template', '.+');
 Route::get('routes', 'EngineController@routes');
 
-Route::get('home', 'HomeController@home')
-    ->middleware('permission:home'); // ACL
+Route::get('home', 'HomeController@home');//->middleware('permission:home'); // ACL
 
 Route::get('view1', 'HomeController@view1');
 
@@ -46,7 +45,7 @@ Route::controllers([
 Route::post('oauth/access_token', function() {
     // Token
     app('request')->json()->set('client_id', 'GXvOWazQ3lA6YSaFji');
-    app('request')->json()->set('client_secret', 'abcd');
+    app('request')->json()->set('client_secret', '#.:s.e.c.r.e.t:.#');
     app('request')->json()->set('grant_type', 'password');
     app('request')->json()->set('username', app('request')->json()->get('email'));
     $response = Authorizer::issueAccessToken();
