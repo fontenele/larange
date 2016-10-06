@@ -46,10 +46,7 @@
 			"php artisan key:generate",
 			"php artisan vendor:publish",
 			"bower install --config.interactive=false",
-			"#",
-			"#",
-			"#",
-			"##### NOW YOU CAN TO CONFIGURE YOUR DATABASE AND RUN: $ php artisan init-db"
+			"##### NOW YOU CAN TO SET YOUR DB CONFIG IN FILE .local.env THEN RUN $ php artisan init-db #####"
 		]
 	}
 }

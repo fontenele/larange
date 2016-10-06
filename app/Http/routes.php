@@ -16,18 +16,17 @@ Route::get('/', 'WelcomeController@index');
 Route::get('view/{template}', 'EngineController@view')->where('template', '.+');
 Route::get('routes', 'EngineController@routes');
 
-Route::get('home', 'HomeController@home');//->middleware('permission:home'); // ACL
-
+Route::get('home', 'HomeController@home');
 Route::get('view1', 'HomeController@view1');
 
 // Module admin
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/', 'AdminController@home');
     
-    Route::get('users', 'Admin\UsersController@index');
-    Route::get('users/edit/{id?}', 'Admin\UsersController@edit')->middleware('permission:users.edit'); // ACL
-    Route::post('users/remove/{id}', 'Admin\UsersController@destroy');
-    Route::post('users/save', 'Admin\UsersController@save');
+    Route::get('users', 'Admin\UsersController@index')->middleware('permission:users.list');
+    Route::get('users/edit/{id?}', 'Admin\UsersController@edit')->middleware('permission:users.edit');
+    Route::post('users/remove/{id}', 'Admin\UsersController@destroy')->middleware('permission:users.delete');
+    Route::post('users/save', 'Admin\UsersController@save')->middleware('permission:users.edit');
     
     Route::get('roles', 'Admin\RolesController@index');
     Route::get('roles/edit/{id?}', 'Admin\RolesController@edit');
@@ -62,8 +61,12 @@ Route::post('oauth/user', ['before' => 'oauth', function() {
     $user->update();
     
     $user->password = '';
+    $permissions = $user->permissions();
     \Session::set('user', $user);
-    \Session::set('user-p', $user->permissions());
+    \Session::set('user-p', $permissions);
+    
+    $user = $user->toArray();
+    $user['permissions'] = array_flip($permissions->toArray());
     
     return Response::json($user);
 }]);

@@ -24,11 +24,11 @@ define([], function() {
                 }).then(function(response) {
                     var user = response.data;
                     localStorage.setItem('user', JSON.stringify(user));
-                    
 
                     $rootScope.authenticated = true;
-                    $rootScope.currentUser = response.data.user;
-
+                    $rootScope.currentUser = user;
+                    $rootScope.permissions = user.permissions;
+                    
                     $location.path('/home');
                     $rootScope.menuItemAtual = $location.path().substring(1);
                 });

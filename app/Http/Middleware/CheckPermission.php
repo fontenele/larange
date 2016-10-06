@@ -13,14 +13,14 @@ class CheckPermission {
 	 */
 	public function handle($request, Closure $next, $permission = null) {
         if(($user = \Session::get('user')) == null) {
-            return response('Você não possui permissão para visualizar essa página.', 401);
+            return response(json_encode(['message' => 'Você não possui permissão.']), 401);
         }
         
         if(!$permission || $user->hasPermission($permission)) {
             return $next($request);
         }
 
-        return response('Você não possui permissão para visualizar essa página.', 401);
+        return response(json_encode(['message' => 'Você não possui permissão.']), 401);
 	}
 
 }

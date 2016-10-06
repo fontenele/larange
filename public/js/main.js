@@ -170,21 +170,7 @@ require([
                 defer.resolve(data);
             }).error(function (message, status) {
                 if(status == 401) {
-                    $location.path(homeRoute);
-                    var n = noty({
-                        layout: 'center',
-                        type: 'error',
-                        text: message,
-                        animation: {
-                            open: 'animated flipInX',
-                            close: 'animated flipOutX',
-                            easing: 'swing',
-                            speed: 500
-                        }
-                    });
-                    setTimeout(function () {
-                        n.close();
-                    }, 3000);
+                    window.history.back();
                 }
             });
             return defer.promise;
@@ -249,6 +235,23 @@ require([
                                     localStorage.removeItem('token');
                                     $location.path(loginRoute);
                                     break;
+                            }
+
+                            if(rejection.data.message) {
+                                var n = noty({
+                                    layout: 'center',
+                                    type: 'error',
+                                    text: rejection.data.message,
+                                    animation: {
+                                        open: 'animated flipInX',
+                                        close: 'animated flipOutX',
+                                        easing: 'swing',
+                                        speed: 500
+                                    }
+                                });
+                                setTimeout(function () {
+                                    n.close();
+                                }, 3000);
                             }
 
                             loading.hide();
@@ -362,6 +365,7 @@ require([
                         if(user) {
                             $rootScope.authenticated = true;
                             $rootScope.currentUser = user;
+                            $rootScope.permissions = user.permissions;
                         }
 
                         // Define active menu
@@ -387,19 +391,24 @@ require([
                     },
                     link: function($rootScope, $scope, $element) {
                         $rootScope.menuLink = function() {
+                            if($location.url().substr(1) == this.item.url) {
+                                return;
+                            }
+                            loading.show();
                             $location.path(this.item.url);
                         };
                     },
-                    template:   '<ul class="nav navbar-nav <% loc %>">' +
-                    '<li ng-repeat="item in items" ng-class="{\'active\': item.selected}" >' +
-                    '<a href="javascript:void(0)" ng-click="menuLink(item.url)"><% item.label %></a>' +
-                    '</li>' +
-                    '</ul>'
+                    template:  
+                        '<ul class="nav navbar-nav <% loc %>">' +
+                            '<li ng-repeat="item in items" ng-class="{\'active\': item.selected}" >' +
+                                '<a href="javascript:void(0)" ng-click="menuLink(item.url)"><% item.label %></a>' +
+                            '</li>' +
+                        '</ul>'
 
                 }
             });
             
-            mainApp.directive("paginator", function ($compile) {
+            mainApp.directive("paginator", function () {
                 var maxPaginationItems = 5;
                 return {
                     scope: {
@@ -493,6 +502,16 @@ require([
                                 '</a>' +
                             '</li>' +
                         '</ul>'
+                    }
+                }
+            });
+
+            mainApp.directive("ngPermission", function () {
+                return {
+                    link: function (scope, elem, attrs) {
+                        if(scope.permissions[attrs.ngPermission] == undefined) {
+                            elem.addClass('disabled').attr('disabled', 'disabled');
+                        }
                     }
                 }
             });

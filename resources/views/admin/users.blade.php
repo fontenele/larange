@@ -1,6 +1,6 @@
 <div data-ng-controller="UsersController">
 
-    <button class="btn btn-info" ng-click="newItem()">Novo</button>
+    <button class="btn btn-info" ng-click="newItem()" ng-permission="users.edit">Novo</button>
     <br />
     <br />
 
@@ -17,18 +17,20 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in list.data">
-                <td class="text-center"><a href="javascript:void(0)" ng-click="editItem(item)"><% item.id %></a></td>
+                <td class="text-center"><button class="btn-sm btn btn-link" ng-click="editItem(item)" ng-permission="users.edit"><% item.id %></button></td>
                 <td><% item.name %></td>
                 <td><% item.email %></td>
                 <td><span class="badge text-capitalize pointer" ng-click="viewRole(role)" style="margin-right: 3px;" ng-repeat="role in item.roles"><% role.name %></span></td>
                 <td><% item.updated_at | dateFormat : 'DD/MM/YYYY HH:mm:ss' %></td>
                 <td class="text-center">
-                    <a href="javascript:void(0)" ng-click="editItem(item)">
-                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
-                    </a>
-                    <a href="javascript:void(0)" ng-click="removeItem(item)">
-                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                    </a>
+                    <div class="btn-group">
+                        <button class="btn-sm btn btn-link" ng-click="editItem(item)" ng-permission="users.edit">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+                        </button>
+                        <button class="btn-sm btn btn-link" ng-click="removeItem(item)" ng-permission="users.delete">
+                            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                        </button>
+                    </div>
                 </td>
             </tr>
         </tbody>

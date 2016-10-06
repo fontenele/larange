@@ -7,13 +7,6 @@ define([], function() {
             {label: 'Perfis', url: 'roles', selected: false},
             {label: 'Usuários', url: 'users', selected: true}
         ];
-
-        /**
-         * 
-         * @TODO Noty ao salvar, colocar timeout, esta muito chato
-         * @TODO Na tela de editar usuarios, colocar lista semelhante a lista de permissões, para ativar/desativar perfis
-         * 
-         */
         
         $scope.getItemsList = function (paginator) {
             var getList = function () {
