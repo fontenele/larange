@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-class DatabaseSeeder extends Seeder {
+class LarangeDatabaseSeeder extends Seeder {
 
 	/**
 	 * Run the database seeds.
