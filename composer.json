@@ -46,7 +46,8 @@
 			"php -r \"copy('.env.example', '.env');\"",
 			"php artisan key:generate",
 			"php artisan vendor:publish",
-			"echo ' --- NOW YOU CAN CONFIGURE YOUR DATABASE AND RUN php artisan:init-db'"
+			"### NOW YOU CAN INSTALL JS DEPENDENCES WITH bower install",
+			"### THEN YOU HAVE TO CONFIGURE YOUR DATABASE AND RUN php artisan:init-db"
 		]
 	}
 }
