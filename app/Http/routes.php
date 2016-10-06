@@ -28,12 +28,17 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('users/remove/{id}', 'Admin\UsersController@destroy')->middleware('permission:users.delete');
     Route::post('users/save', 'Admin\UsersController@save')->middleware('permission:users.edit');
     
-    Route::get('roles', 'Admin\RolesController@index');
-    Route::get('roles/edit/{id?}', 'Admin\RolesController@edit');
-    Route::post('roles/remove/{id}', 'Admin\RolesController@destroy');
-    Route::post('roles/save', 'Admin\RolesController@save');
-    Route::get('roles/{id}/permissions', 'Admin\RolesController@permissions');
-    Route::post('roles/{id}/permissions/save', 'Admin\RolesController@savePermissions');
+    Route::get('roles', 'Admin\RolesController@index')->middleware('permission:roles.list');
+    Route::get('roles/edit/{id?}', 'Admin\RolesController@edit')->middleware('permission:roles.edit');
+    Route::post('roles/remove/{id}', 'Admin\RolesController@destroy')->middleware('permission:roles.delete');
+    Route::post('roles/save', 'Admin\RolesController@save')->middleware('permission:roles.edit');
+    Route::get('roles/{id}/permissions', 'Admin\RolesController@permissions')->middleware('permission:roles.edit');
+    Route::post('roles/{id}/permissions/save', 'Admin\RolesController@savePermissions')->middleware('permission:roles.edit');
+
+    Route::get('permissions', 'Admin\PermissionsController@index')->middleware('permission:permissions.list');
+    Route::get('permissions/edit/{id?}', 'Admin\PermissionsController@edit')->middleware('permission:permissions.edit');
+    Route::post('permissions/remove/{id}', 'Admin\PermissionsController@destroy')->middleware('permission:permissions.delete');
+    Route::post('permissions/save', 'Admin\PermissionsController@save')->middleware('permission:permissions.edit');
 });
     
 Route::controllers([

@@ -1,48 +1,76 @@
 define(['moment'], function(moment) {
 
     var mainApp = angular.module("mainApp", []);
-    mainApp.controller('RolesPermissionsController', function($rootScope, $scope, $location, $http, $window, router) {
+    mainApp.controller('PermissionsController', function($rootScope, $scope, $location, $http, $window, router) {
         $rootScope.menu = [
             {label: 'Painel', url: 'admin', selected: false},
-            {label: 'Perfis', url: 'roles', selected: true},
+            {label: 'Perfis', url: 'roles', selected: false},
+            {label: 'Permissões', url: 'permissions', selected: true},
             {label: 'Usuários', url: 'users', selected: false}
         ];
 
-        $scope.getItemsList = function () {
-            router.getJson().then(function (data) {
-                $scope.role = data.role;
-                $scope.list = data.list;
-                $scope.actives = data.actives;
+        $scope.getItemsList = function (paginator) {
+            var getList = function () {
+                router.getJson(paginator).then(function(data) {
+                    $scope.list = data.list;
 
-                $scope.save = function ($event) {
-                    var items = $($event.target).serializeArray();
-                    
-                    $http.post('admin/roles/' + data.role.id + '/permissions/save', {
-                        items: items
-                    }).success(function (data) {
-                        if (data.status == 'success') {
-                            var n = noty({
-                                layout: 'center',
-                                type: 'success',
-                                text: data.message,
-                                animation: {
-                                    open: 'animated flipInX',
-                                    close: 'animated flipOutX',
-                                    easing: 'swing',
-                                    speed: 500
-                                }
-                            });
-                            setTimeout(function () {
-                                n.close();
-                            }, 3000);
-                            $location.path('roles');
-                            return;
-                        }
+                    $scope.editItem = function(item) {
+                        $location.path('permissions/edit/' + item.id);
+                    };
 
+                    $scope.removeItem = function(item) {
                         noty({
                             layout: 'center',
-                            type: 'error',
-                            text: data.message,
+                            type: 'confirm',
+                            text: 'Deseja mesmo remover a Permissão ' + item.name + '?',
+                            buttons: [
+                                {
+                                    addClass: 'btn btn-primary',
+                                    text: 'Ok',
+                                    onClick: function ($noty) {
+                                        $noty.close();
+                                        $http.post('admin/permissions/remove/' + item.id).success(function (data) {
+                                            if(data.status == 'success') {
+                                                var n = noty({
+                                                    layout: 'center',
+                                                    type: 'success',
+                                                    text: data.message,
+                                                    animation: {
+                                                        open: 'animated flipInX',
+                                                        close: 'animated flipOutX',
+                                                        easing: 'swing',
+                                                        speed: 500
+                                                    }
+                                                });
+                                                setTimeout(function () {
+                                                    n.close();
+                                                }, 3000);
+                                                $route.reload();
+                                                return;
+                                            }
+
+                                            noty({
+                                                layout: 'center',
+                                                type: 'error',
+                                                text: data.message,
+                                                animation: {
+                                                    open: 'animated flipInX',
+                                                    close: 'animated flipOutX',
+                                                    easing: 'swing',
+                                                    speed: 500
+                                                }
+                                            });
+                                        });
+                                    }
+                                },
+                                {
+                                    addClass: 'btn btn-danger',
+                                    text: 'Cancel',
+                                    onClick: function ($noty) {
+                                        $noty.close();
+                                    }
+                                }
+                            ],
                             animation: {
                                 open: 'animated flipInX',
                                 close: 'animated flipOutX',
@@ -50,15 +78,15 @@ define(['moment'], function(moment) {
                                 speed: 500
                             }
                         });
-                    });
-                };
-                $scope.cancelar = function () {
-                    $window.history.back();
-                };
-            });
+                    };
+
+                    $scope.newItem = function() {
+                        $location.path('permissions/edit');
+                    };
+                });
+            }();
         };
 
         $scope.getItemsList();
-        
     });
 });

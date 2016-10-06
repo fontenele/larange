@@ -5,6 +5,7 @@ define([], function() {
         $rootScope.menu = [
             {label: 'Painel', url: 'admin', selected: false},
             {label: 'Perfis', url: 'roles', selected: false},
+            {label: 'Permissões', url: 'permissions', selected: false},
             {label: 'Usuários', url: 'users', selected: true}
         ];
         

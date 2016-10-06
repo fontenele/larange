@@ -25,9 +25,9 @@ class DatabaseSeeder extends Seeder {
 
         // Users
         $users = [
-            ['id' => 1, 'name' => 'Guilherme Fontenele', 'email' => 'guilherme@fontenele.net', 'password' => Hash::make('secret'), 'created_at' => $datetime, 'updated_at' => $datetime],
-            ['id' => 2, 'name' => 'Simone', 'email' => 'siteles@fontenele.net', 'password' => Hash::make('secret'), 'created_at' => $datetime, 'updated_at' => $datetime],
-            ['id' => 3, 'name' => 'Walter White', 'email' => 'ww@heisenberg.com', 'password' => Hash::make('secret'), 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'Guilherme Fontenele', 'email' => 'guilherme@fontenele.net', 'password' => Hash::make('secret'), 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'Simone', 'email' => 'siteles@fontenele.net', 'password' => Hash::make('secret'), 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'Walter White', 'email' => 'ww@heisenberg.com', 'password' => Hash::make('secret'), 'created_at' => $datetime, 'updated_at' => $datetime],
         ];
         DB::table('users')->insert($users);
         
@@ -41,9 +41,15 @@ class DatabaseSeeder extends Seeder {
         
         // Permissions
         $permisisons = [
-            ['id' => 1, 'name' => 'users.list', 'label' => 'List Users', 'created_at' => $datetime, 'updated_at' => $datetime],
-            ['id' => 2, 'name' => 'users.edit', 'label' => 'Edit/Create Users', 'created_at' => $datetime, 'updated_at' => $datetime],
-            ['id' => 3, 'name' => 'users.delete', 'label' => 'Delete Users', 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'users.list', 'label' => 'List Users', 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'users.edit', 'label' => 'Edit/Create Users', 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'users.delete', 'label' => 'Delete Users', 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'roles.list', 'label' => 'List Roles', 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'roles.edit', 'label' => 'Edit/Create Roles', 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'roles.delete', 'label' => 'Delete Roles', 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'permissions.list', 'label' => 'List Permissions', 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'permissions.edit', 'label' => 'Edit/Create Permissions', 'created_at' => $datetime, 'updated_at' => $datetime],
+            ['name' => 'permissions.delete', 'label' => 'Delete Permissions', 'created_at' => $datetime, 'updated_at' => $datetime],
         ];
         DB::table('permissions')->insert($permisisons);
         
@@ -52,6 +58,12 @@ class DatabaseSeeder extends Seeder {
             ['roles_id' => 666, 'permissions_id' => 1],
             ['roles_id' => 666, 'permissions_id' => 2],
             ['roles_id' => 666, 'permissions_id' => 3],
+            ['roles_id' => 666, 'permissions_id' => 4],
+            ['roles_id' => 666, 'permissions_id' => 5],
+            ['roles_id' => 666, 'permissions_id' => 6],
+            ['roles_id' => 666, 'permissions_id' => 7],
+            ['roles_id' => 666, 'permissions_id' => 8],
+            ['roles_id' => 666, 'permissions_id' => 9],
             ['roles_id' => 333, 'permissions_id' => 1],
         ];
         DB::table('permissions_roles')->insert($roles_permisisons);

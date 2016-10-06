@@ -76,6 +76,25 @@ class EngineController extends Controller {
             'roles/:id/permissions' => [
                 'json' => '/admin/roles/:id/permissions',
                 'url' => 'roles/:id/permissions',
+                'controller' => 'js/controllers/admin/roles-permissions.js',
+                'template' => 'view/admin/roles-permissions'
+            ],
+            // Permissions
+            'permissions/edit/:id' => [
+                'json' => '/admin/permissions/edit/:id',
+                'url' => 'permissions/edit/:id',
+                'controller' => 'js/controllers/admin/permissions-edit.js',
+                'template' => 'view/admin/permissions-edit'
+            ],
+            'permissions/edit' => [
+                'json' => '/admin/permissions/edit',
+                'url' => 'permissions/edit',
+                'controller' => 'js/controllers/admin/permissions-edit.js',
+                'template' => 'view/admin/permissions-edit'
+            ],
+            'permissions' => [
+                'json' => '/admin/permissions',
+                'url' => 'permissions',
                 'controller' => 'js/controllers/admin/permissions.js',
                 'template' => 'view/admin/permissions'
             ],
