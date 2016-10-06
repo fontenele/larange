@@ -9,7 +9,7 @@
 		"laravel/framework": "5.1",
 		"barryvdh/laravel-ide-helper": "~2.0",
 		"laracasts/flash": "~1.3",
-		"lucadegasperi/oauth2-server-laravel": "5.0.x@dev"
+		"lucadegasperi/oauth2-server-laravel": "4.0.x@dev"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "~1.4",
@@ -33,6 +33,8 @@
 	"scripts": {
 		"post-install-cmd": [
 			"mkdir bootstrap/cache",
+			"chmod -Rf 777 bootstrap/cache",
+			"chmod -Rf 777 storage/",
 			"php artisan clear-compiled",
 			"php artisan optimize"
 		],
@@ -43,7 +45,8 @@
 		"post-create-project-cmd": [
 			"php -r \"copy('.env.example', '.env');\"",
 			"php artisan key:generate",
-			"php artisan vendor:publish"
+			"php artisan vendor:publish",
+			"echo ' --- NOW YOU CAN CONFIGURE YOUR DATABASE AND RUN php artisan:init-db'"
 		]
 	}
 }
