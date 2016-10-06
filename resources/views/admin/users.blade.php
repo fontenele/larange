@@ -20,7 +20,7 @@
                 <td class="text-center"><a href="javascript:void(0)" ng-click="editItem(item)"><% item.id %></a></td>
                 <td><% item.name %></td>
                 <td><% item.email %></td>
-                <td><span class="badge" ng-click="viewRole(role)" style="margin-right: 6px;" ng-repeat="role in item.roles"><% role.name %></span></td>
+                <td><span class="badge text-capitalize pointer" ng-click="viewRole(role)" style="margin-right: 3px;" ng-repeat="role in item.roles"><% role.name %></span></td>
                 <td><% item.updated_at | dateFormat : 'DD/MM/YYYY HH:mm:ss' %></td>
                 <td class="text-center">
                     <a href="javascript:void(0)" ng-click="editItem(item)">

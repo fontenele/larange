@@ -66,6 +66,7 @@ require([
     'momentLocales'
 ], function(moment) {
     // @TODO ver essas variaveis, nao pode ter elas
+    var homeRoute = '/home';
     var loginRoute = '/login';
     var authRoute = '/oauth/access_token';
     // var authRoute = '/api/authenticate';
@@ -145,7 +146,7 @@ require([
     
     var mainApp = angular.module("mainApp", ['ngRoute', 'oc.lazyLoad', 'satellizer', 'Routing']);
     
-    mainApp.service('router', function($http, $q) {
+    mainApp.service('router', function($http, $q, $location) {
         this.routesProvider = null;
         this.setRoutesProvider = function(routesProvider) {
             this.routesProvider = routesProvider;
@@ -167,6 +168,24 @@ require([
             }
             $http.get(url).success(function(data) {
                 defer.resolve(data);
+            }).error(function (message, status) {
+                if(status == 401) {
+                    $location.path(homeRoute);
+                    var n = noty({
+                        layout: 'center',
+                        type: 'error',
+                        text: message,
+                        animation: {
+                            open: 'animated flipInX',
+                            close: 'animated flipOutX',
+                            easing: 'swing',
+                            speed: 500
+                        }
+                    });
+                    setTimeout(function () {
+                        n.close();
+                    }, 3000);
+                }
             });
             return defer.promise;
         };
@@ -185,7 +204,6 @@ require([
             mainApp.config(function($routeProvider, $ocLazyLoadProvider, $interpolateProvider, $authProvider, $httpProvider, $provide, routesProvider) {
                 // Define routes
                 routesProvider.setRoutes(routes);
-                // console.log(routesProvider, 'routesProvider', routes);
 
                 /**
                  * HTTP Request Interceptor

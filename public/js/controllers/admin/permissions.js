@@ -10,6 +10,7 @@ define(['moment'], function(moment) {
 
         $scope.getItemsList = function () {
             router.getJson().then(function (data) {
+                $scope.role = data.role;
                 $scope.list = data.list;
                 $scope.actives = data.actives;
 

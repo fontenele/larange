@@ -1,12 +1,14 @@
 <div data-ng-controller="RolesPermissionsController">
     
+    <h3 class="page-header"><% role.label %></h3>
+    
     <form ng-submit="save($event)">
         <div class="panel panel-default" ng-repeat="group in list">
             <div class="panel-heading text-capitalize"><% group.name %></div>
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in group.items">
                     <span class="badge" style="height: 30px; font-size: 20px;"><% item.name %></span>
-                    <label>
+                    <label class="pointer">
                         <input type="checkbox" ng-checked="actives[item.name]" name="active[<% item.id %>]" style="margin-right: 6px;" /><% item.label %>
                     </label>
                 </li>

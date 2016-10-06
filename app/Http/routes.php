@@ -26,7 +26,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/', 'AdminController@home');
     
     Route::get('users', 'Admin\UsersController@index');
-    Route::get('users/edit/{id?}', 'Admin\UsersController@edit');
+    Route::get('users/edit/{id?}', 'Admin\UsersController@edit')->middleware('permission:users.edit'); // ACL
     Route::post('users/remove/{id}', 'Admin\UsersController@destroy');
     Route::post('users/save', 'Admin\UsersController@save');
     
