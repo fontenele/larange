@@ -49,7 +49,7 @@
 			"#",
 			"#",
 			"#",
-			"##### NOW YOU CAN TO CONFIGURE YOUR DATABASE AND RUN: $ php artisan:init-db"
+			"##### NOW YOU CAN TO CONFIGURE YOUR DATABASE AND RUN: $ php artisan migrate --seed"
 		]
 	}
 }
