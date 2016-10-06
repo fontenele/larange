@@ -361,6 +361,13 @@ require([
                             {label: 'View1', url: 'view1', selected: false},
                             {label: 'Admin', url: 'admin', selected: false}
                         ];
+                        
+                        $rootScope.bcItem = function (url, lastItem) {
+                            if(lastItem) {
+                                return false;
+                            }
+                            $location.path(url);
+                        };
 
                         if(user) {
                             $rootScope.authenticated = true;

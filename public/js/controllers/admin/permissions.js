@@ -2,6 +2,8 @@ define(['moment'], function(moment) {
 
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('PermissionsController', function($rootScope, $scope, $location, $http, $window, router) {
+        $rootScope.namespace = [['Admin', 'admin'], ['Permissions', '']];
+        
         $rootScope.menu = [
             {label: 'Painel', url: 'admin', selected: false},
             {label: 'Perfis', url: 'roles', selected: false},

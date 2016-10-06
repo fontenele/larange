@@ -2,6 +2,8 @@ define([], function() {
 
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('UsersController', function($rootScope, $scope, $location, $http, $route, router) {
+        $rootScope.namespace = [['Admin', 'admin'], ['Users', '']];
+        
         $rootScope.menu = [
             {label: 'Painel', url: 'admin', selected: false},
             {label: 'Perfis', url: 'roles', selected: false},

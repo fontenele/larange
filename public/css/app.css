@@ -35,6 +35,14 @@ a, a:hover, a:active, a:focus, input::-moz-focus-inner {
     }
 }
 
+.breadcrumb li:last-child button {
+    cursor: text;
+    color: #808080;
+}
+.breadcrumb li:last-child button:hover {
+    text-decoration: none;
+}
+
 
 /* Custom page CSS
 -------------------------------------------------- */

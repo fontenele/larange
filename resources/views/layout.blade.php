@@ -54,9 +54,9 @@
                 <div ng-class="container_class">
                     <!-- @TODO FAZER DIRECTIVE breadcrumb -->
                     <ol class="breadcrumb" ng-show="authenticated">
-                        <li><a ng-click="menuItem('home')" href="javascript:void(0)">Home</a></li>
-                        <li><a ng-click="menuItem('view1')" href="javascript:void(0)">View1</a></li>
-                        <li class="active">Data</li>
+                        <li ng-repeat="bc in namespace">
+                            <button class="btn btn-sm btn-link" ng-click="bcItem(bc[1], $last)"><% bc[0] %></button>
+                        </li>
                     </ol>
                     <ng-view id="ng-view" ng-cloak class="ng-cloak"></ng-view>
                 </div>
