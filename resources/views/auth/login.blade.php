@@ -1,6 +1,6 @@
 <div class="col-sm-4 col-sm-offset-4" data-ng-controller="LoginController">
     <div class="well">
-        <h3>Login <% name %> </h3>
+        <h3>Login</h3>
         <form>
             <p class="alert alert-danger" ng-if="loginError"><strong>Error:</strong> <% loginErrorText %></p>
             <div class="form-group">
@@ -9,7 +9,7 @@
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Password" ng-model="password">
             </div>
-            <button class="btn btn-primary" ng-click="login()">Submit</button>
+            <button class="btn btn-primary" ng-click="login()">Enviar</button>
         </form>
     </div>
 </div>

@@ -5,8 +5,7 @@ define([], function() {
         $rootScope.namespace = [['Home', '']];
         
         router.getJson().then(function(data) {
-            $scope.teste = data.tela_home;
-            $scope.message = data.message;
+            $scope.total = data;
         });
     });
 

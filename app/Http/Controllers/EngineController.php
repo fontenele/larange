@@ -12,11 +12,12 @@ class EngineController extends Controller {
             'guest' => [
             ],
             'default' => [
-                ['url' => 'home', 'label' => 'Home'],
-                ['url' => 'view1', 'label' => 'View1'],
+                ['url' => 'home', 'label' => 'Principal'],
+                ['url' => 'view1', 'label' => 'Folha de Ponto'],
                 ['url' => 'admin', 'label' => 'Admin'],
             ],
             'admin' => [
+                ['url' => 'home', 'label' => 'Principal'],
                 ['url' => 'admin', 'label' => 'Painel'],
                 ['url' => 'roles', 'label' => 'Roles'],
                 ['url' => 'permissions', 'label' => 'Permissions'],

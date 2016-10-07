@@ -3,12 +3,29 @@ define([], function() {
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('LoginController', function($rootScope, $scope, $http, $q, $auth, $location) {
 
-        $scope.name = "Nome?";
         $scope.login = function() {
             var credentials = {
                 email: this.email,
                 password: this.password
             };
+            
+            if(!credentials.email || !credentials.password) {
+                var n = noty({
+                    layout: 'center',
+                    type: 'error',
+                    text: 'E-mail/Password não informados.',
+                    animation: {
+                        open: 'animated flipInX',
+                        close: 'animated flipOutX',
+                        easing: 'swing',
+                        speed: 500
+                    }
+                });
+                setTimeout(function () {
+                    n.close();
+                }, 3000);
+                return false;
+            }
 
             $auth.login(credentials).then(function(result) {
                 if(!result.data || !result.data.access_token) {

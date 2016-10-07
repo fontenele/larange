@@ -170,7 +170,7 @@ require([
                 defer.resolve(data);
             }).error(function (message, status) {
                 if(status == 401) {
-                    window.history.back();
+                    // window.history.back();
                 }
             });
             return defer.promise;
@@ -230,28 +230,39 @@ require([
                                     $location.path(loginRoute);
                                     break;
                                 case "invalid_credentials":
-                                    alert("usuário/senha inválidos");
+                                    var n = noty({
+                                        layout: 'center',
+                                        type: 'error',
+                                        text: 'E-mail/Password inválidos.',
+                                        animation: {
+                                            open: 'animated flipInX',
+                                            close: 'animated flipOutX',
+                                            easing: 'swing',
+                                            speed: 500
+                                        }
+                                    });
+                                    setTimeout(function () {
+                                        n.close();
+                                    }, 3000);
                                     localStorage.removeItem('user');
                                     localStorage.removeItem('token');
                                     $location.path(loginRoute);
                                     break;
-                            }
-
-                            if(rejection.data.message) {
-                                var n = noty({
-                                    layout: 'center',
-                                    type: 'error',
-                                    text: rejection.data.message,
-                                    animation: {
-                                        open: 'animated flipInX',
-                                        close: 'animated flipOutX',
-                                        easing: 'swing',
-                                        speed: 500
-                                    }
-                                });
-                                setTimeout(function () {
-                                    n.close();
-                                }, 3000);
+                                default:
+                                    var n = noty({
+                                        layout: 'center',
+                                        type: 'error',
+                                        text: rejection.data.message || 'Error!',
+                                        animation: {
+                                            open: 'animated flipInX',
+                                            close: 'animated flipOutX',
+                                            easing: 'swing',
+                                            speed: 500
+                                        }
+                                    });
+                                    setTimeout(function () {
+                                        n.close();
+                                    }, 3000);
                             }
 
                             loading.hide();
@@ -420,7 +431,6 @@ require([
                         items: '='
                     },
                     link: function($rootScope, $scope, $element) {
-                        console.log("menu");
                         $rootScope.menuLink = function() {
                             if($location.url().substr(1) == this.item.url) {
                                 return;
