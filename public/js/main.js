@@ -328,7 +328,6 @@ require([
                                 }
                             }
 
-                            user.avatar = 12;
                             if(user) {
                                 user.avatar = 'images/avatar/' + user.avatar + '.jpg';
                                 $rootScope.authenticated = true;
