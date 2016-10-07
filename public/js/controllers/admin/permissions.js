@@ -2,11 +2,14 @@ define(['moment'], function(moment) {
 
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('PermissionsController', function($rootScope, $scope, $location, $http, $window, router) {
-        $rootScope.namespace = [['Admin', 'admin'], ['Permissions', '']];
 
         $scope.getItemsList = function (paginator) {
             var getList = function () {
                 router.getJson(paginator).then(function(data) {
+                    $rootScope.namespace = [['Administração', 'admin'], ['Permissões', '']];
+                    $rootScope.pageHeader = 'Listagem de permissões';
+                    $rootScope.pageSubheader = '';
+                    
                     $scope.list = data.list;
 
                     $scope.editItem = function(item) {

@@ -8,6 +8,7 @@
     ],
     "dependencies": {
         "jquery": "2.*",
+        "jquery-ui": "latest",
         "angular": "1.4.12",
         "angular-route": "1.5.8",
         "bootstrap": "latest",
@@ -19,7 +20,10 @@
         "moment": "2.10.6",
         "angular-moment": "0.10.3",
         "noty": "latest",
-        "animate.css": "latest"
+        "animate.css": "latest",
+        "admin-lte": "latest",
+        "font-awesome": "latest",
+        "ionicons": "latest"
     },
     "resolutions": {
         "angular": "1.4.12"

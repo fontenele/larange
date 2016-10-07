@@ -16,12 +16,12 @@ Route::get('/', 'WelcomeController@index');
 Route::get('view/{template}', 'EngineController@view')->where('template', '.+');
 Route::get('config', 'EngineController@config');
 
-Route::get('home', 'HomeController@home');
-Route::get('view1', 'HomeController@view1');
+Route::get('home', 'HomeController@home')->middleware('after');
+Route::get('view1', 'HomeController@view1')->middleware('after');
 
 // Module admin
-Route::group(['prefix' => 'admin'], function() {
-    Route::get('/', 'AdminController@home');
+Route::group(['prefix' => 'admin', 'middleware' => ['after']], function() {
+    Route::get('/', 'AdminController@home')->middleware('after');
     
     Route::get('users', 'Admin\UsersController@index')->middleware('permission:users.list');
     Route::get('users/edit/{id?}', 'Admin\UsersController@edit')->middleware('permission:users.edit');

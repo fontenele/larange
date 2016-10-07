@@ -2,11 +2,14 @@ define([], function() {
 
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('UsersController', function($rootScope, $scope, $location, $http, $route, router) {
-        $rootScope.namespace = [['Admin', 'admin'], ['Users', '']];
         
         $scope.getItemsList = function (paginator) {
             var getList = function () {
                 router.getJson(paginator).then(function(data) {
+                    $rootScope.namespace = [['Administração', 'admin'], ['Usuários', '']];
+                    $rootScope.pageHeader = 'Listagem de usuários';
+                    $rootScope.pageSubheader = '';
+                    
                     $scope.list = data.list;
 
                     $scope.editItem = function(item) {

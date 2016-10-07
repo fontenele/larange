@@ -1,7 +1,5 @@
 <div data-ng-controller="RolesPermissionsController">
     
-    <h3 class="page-header"><% role.label %></h3>
-    
     <form ng-submit="save($event)">
         <div class="panel panel-default" ng-repeat="group in list">
             <div class="panel-heading text-capitalize"><% group.name %></div>

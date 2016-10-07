@@ -2,9 +2,12 @@ define(['moment'], function(moment) {
 
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('UsersEditController', function($rootScope, $scope, $location, $http, $window, router) {
-        $rootScope.namespace = [['Admin', 'admin'], ['Users', 'users'], ['Edit', '']];
 
         router.getJson().then(function(data) {
+            $rootScope.namespace = [['Administração', 'admin'], ['Usuários', 'users'], [(data.item ? 'Editar' : 'Criar'), '']];
+            $rootScope.pageHeader = data.item ? 'Editar usuário' : 'Criar usuário';
+            $rootScope.pageSubheader = data.item ? data.item.name : '';
+            
             $scope.item = data.item;
             $scope.list = data.roles;
             $scope.actives = data.actives;

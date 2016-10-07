@@ -10,18 +10,28 @@ class EngineController extends Controller {
     public function config() {
         $menus = [
             'guest' => [
+                'header' => 'Bem vindo, visitante!',
+                'items' => [
+                    ['url' => 'login', 'label' => 'Login', 'icon' => 'fa fa-link', 'acl' => ''],
+                ]
             ],
             'default' => [
-                ['url' => 'home', 'label' => 'Principal'],
-                ['url' => 'view1', 'label' => 'Folha de Ponto'],
-                ['url' => 'admin', 'label' => 'Admin'],
+                'header' => 'Principal',
+                'items' => [
+                    ['url' => 'home', 'label' => 'Principal', 'icon' => 'fa fa-home', 'acl' => ''],
+                    ['url' => 'view1', 'label' => 'Folha de Ponto', 'icon' => 'fa fa-folder-open', 'acl' => ''],
+                    ['url' => 'admin', 'label' => 'Admin', 'icon' => 'fa fa-cogs', 'acl' => 'users.list'],
+                ]
             ],
             'admin' => [
-                ['url' => 'home', 'label' => 'Principal'],
-                ['url' => 'admin', 'label' => 'Painel'],
-                ['url' => 'roles', 'label' => 'Roles'],
-                ['url' => 'permissions', 'label' => 'Permissions'],
-                ['url' => 'users', 'label' => 'Users'],
+                'header' => 'Administração',
+                'items' => [
+                    ['url' => 'home', 'label' => 'Principal', 'icon' => 'fa fa-home', 'acl' => ''],
+                    ['url' => 'admin', 'label' => 'Painel', 'icon' => 'fa fa-cogs', 'acl' => ''],
+                    ['url' => 'roles', 'label' => 'Perfis', 'icon' => 'fa fa-sitemap', 'acl' => 'roles.list'],
+                    ['url' => 'permissions', 'label' => 'Permissões', 'icon' => 'fa fa-shield', 'acl' => 'permissions.list'],
+                    ['url' => 'users', 'label' => 'Usuários', 'icon' => 'fa fa-user', 'acl' => 'users.list'],
+                ]
             ]
         ];
         
@@ -31,7 +41,7 @@ class EngineController extends Controller {
                 'url' => 'login',
                 'controller' => 'js/controllers/auth/login.js',
                 'template' => 'view/auth/login',
-                'menu' => ['guest', ''],
+                'menu' => ['guest', 'login'],
             ],
             'home' => [
                 'json' => '/home',
@@ -132,24 +142,6 @@ class EngineController extends Controller {
         ];
         
         return ['routes' => $routes, 'menus' => $menus];
-    }
-
-    public function menus() {
-        return [
-            'guest' => [
-            ],
-            'logged' => [
-                ['url' => 'home', 'label' => 'Home'],
-                ['url' => 'view1', 'label' => 'View1'],
-                ['url' => 'admin', 'label' => 'Admin'],
-            ],
-            'admin' => [
-                ['url' => 'admin', 'label' => 'Painel'],
-                ['url' => 'roles', 'label' => 'Roles'],
-                ['url' => 'permissions', 'label' => 'Permissions'],
-                ['url' => 'users', 'label' => 'Users'],
-            ]
-        ];
     }
 
     public function view($template) {

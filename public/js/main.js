@@ -8,18 +8,20 @@ require.config({
     baseUrl: 'js',
     urlArgs: "_t=" + (new Date()).getTime(),
     paths: {
-        //jquery
+        // jquery
         'jquery': '../vendor/jquery/dist/jquery.min',
-        //plugins
+        // plugins
         'loading': 'plugins/loading',
-        //noty
+        // noty
         'noty': '../vendor/noty/js/noty/packaged/jquery.noty.packaged.min',
         'noty-layout-center': '../vendor/noty/js/noty/layouts/center',
         'noty-layout-top': '../vendor/noty/js/noty/layouts/top',
         'noty-layout-bottom': '../vendor/noty/js/noty/layouts/bottom',
         'noty-theme-relax': '../vendor/noty/js/noty/themes/relax',
-        //bootstrap
+        // bootstrap
         'bootstrap': '../vendor/bootstrap/dist/js/bootstrap.min',
+        // adminlte
+        'adminlte': '../vendor/admin-lte/dist/js/app',
         // angular
         'angular': '../vendor/angular/angular.min',
         'ocLazyLoad': '../vendor/ocLazyLoad/dist/ocLazyLoad.require',
@@ -49,7 +51,8 @@ require.config({
         'satellizer': ['angular'],
         'momentLocales': ['momentLocalesAll'],
         'noty': ['jquery'],
-        'noty-theme-relax': ['noty']
+        'noty-theme-relax': ['noty'],
+        'adminlte': ['jquery', 'bootstrap']
     },
     packages: {
     }
@@ -61,6 +64,7 @@ require([
     'ocLazyLoad',
     'ngComponentRouter',
     'bootstrap',
+    'adminlte',
     'satellizer',
     'loading',
     'momentLocales'
@@ -197,7 +201,7 @@ require([
                  * @param $location
                  * @returns {{request: request, response: response, requestError: requestError, responseError: responseError}}
                  */
-                function httpInterceptor($q, $location) {
+                function httpInterceptor($q, $location, $rootScope) {
                     return {
                         request: function(config) {
                             loading.show();
@@ -212,6 +216,10 @@ require([
                         },
                         response: function(response) {
                             loading.hide();
+                            if(response.data.__sys__) {
+                                var sysConfig = response.data.__sys__;
+                                $rootScope.currentUser.totals = sysConfig.totals;
+                            }
                             return response;
                         },
                         requestError: function(rejection) {
@@ -312,19 +320,22 @@ require([
                                 $location.path(url);
                             };
 
+                            $rootScope.menu = {items:config.menus[route.menu[0]].items, header: config.menus[route.menu[0]].header};
+                            for(i in $rootScope.menu.items) {
+                                $rootScope.menu.items[i].selected = false;
+                                if($rootScope.menu.items[i].url == route.menu[1]) {
+                                    $rootScope.menu.items[i].selected = true;
+                                }
+                            }
+
+                            user.avatar = 12;
                             if(user) {
+                                user.avatar = 'images/avatar/' + user.avatar + '.jpg';
                                 $rootScope.authenticated = true;
                                 $rootScope.currentUser = user;
                                 $rootScope.permissions = user.permissions;
-                                $rootScope.menu = config.menus[route.menu[0]];
-                                for(i in $rootScope.menu) {
-                                    // Remove all selected
-                                    $rootScope.menu[i].selected = false;
-                                    // Add active to selected item
-                                    if($rootScope.menu[i].url == route.menu[1]) {
-                                        $rootScope.menu[i].selected = true;
-                                    }
-                                }
+                            } else {
+                                $rootScope.currentUser = {avatar: 'images/avatar/2.jpg'};
                             }
 
                             switch(true) {
@@ -387,38 +398,6 @@ require([
                         var url = $location.path().substring(1);
                         // Get User from storage
                         var user = JSON.parse(localStorage.getItem('user'));
-
-                        // Load menu dynamic, use $http ou $.get
-                        // $rootScope.menu = [
-                        //     {label: 'Home', url: 'home', selected: false},
-                        //     {label: 'View1', url: 'view1', selected: false},
-                        //     {label: 'Admin', url: 'admin', selected: false}
-                        // ];
-                        
-                        // $rootScope.bcItem = function (url, lastItem) {
-                        //     if(lastItem) {
-                        //         return false;
-                        //     }
-                        //     $location.path(url);
-                        // };
-                        //
-                        // if(user) {
-                        //     $rootScope.authenticated = true;
-                        //     $rootScope.currentUser = user;
-                        //     $rootScope.permissions = user.permissions;
-                        //     // $rootScope.menu = config.menu;
-                        //     console.log(1,config.routesProvider.getActual(), url);
-                        // }
-
-                        // Define active menu
-                        /*for(i in $rootScope.menu) {
-                            // Remove all selected
-                            $rootScope.menu[i].selected = false;
-                            // Add active to selected item
-                            if($rootScope.menu[i].url == url) {
-                                $rootScope.menu[i].selected = true;
-                            }
-                        }*/
                     });
                 });
 
@@ -427,7 +406,6 @@ require([
                     restrict: "E",
                     replace: true,
                     scope: {
-                        loc: '@location',
                         items: '='
                     },
                     link: function($rootScope, $scope, $element) {
@@ -440,11 +418,9 @@ require([
                         };
                     },
                     template:  
-                        '<ul class="nav navbar-nav <% loc %>">' +
-                            '<li ng-repeat="item in items" ng-class="{\'active\': item.selected}" >' +
-                                '<a href="javascript:void(0)" ng-click="menuLink(item.url)"><% item.label %></a>' +
-                            '</li>' +
-                        '</ul>'
+                        '<li ng-repeat="item in items" ng-show="checkAclPermission(item.acl)" ng-class="{\'active\': item.selected}" >' +
+                            '<a href="javascript:void(0)" ng-click="menuItem(item.url)"><i ng-class="item.icon"></i> <span><% item.label %></span></a>' +
+                        '</li>'
                 }
             });
             
@@ -573,18 +549,23 @@ require([
             /**
              * App Main Controller
              */
-            mainApp.controller('PrincipalController', function($scope, $ocLazyLoad, $routeParams, $location, $auth) {
+            mainApp.controller('PrincipalController', function($rootScope, $scope, $ocLazyLoad, $routeParams, $location, $auth) {
                 $scope.menuItemAtual = $location.path().substring(1);
 
                 $scope.menuItem = function(url, logout) {
                     if(logout) {
-                        // Logout in satellizer
                         $auth.logout();
-                        // Remove User from storage
                         localStorage.removeItem('user');
                     }
                     $location.path(url);
                 };
+                
+                $scope.checkAclPermission = function (aclURL) {
+                    if(aclURL && $rootScope.permissions[aclURL] == undefined) {
+                        return false;
+                    }
+                    return true;
+                }
             });
 
             /**

@@ -2,9 +2,13 @@ define(['moment'], function(moment) {
 
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('RolesPermissionsController', function($rootScope, $scope, $location, $http, $window, router) {
-
+        
         $scope.getItemsList = function () {
             router.getJson().then(function (data) {
+                $rootScope.namespace = [['Administração', 'admin'], ['Perfis', 'roles'], ['Permissões', '']];
+                $rootScope.pageHeader = 'Permissões de Perfil';
+                $rootScope.pageSubheader = data.role ? data.role.label : '';
+                
                 $scope.role = data.role;
                 $scope.list = data.list;
                 $scope.actives = data.actives;

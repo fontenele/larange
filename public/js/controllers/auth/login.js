@@ -2,7 +2,10 @@ define([], function() {
 
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('LoginController', function($rootScope, $scope, $http, $q, $auth, $location) {
-
+        $rootScope.namespace = [['Login', '']];
+        $rootScope.pageHeader = 'Faça o login';
+        $rootScope.pageSubheader = '';
+        
         $scope.login = function() {
             var credentials = {
                 email: this.email,

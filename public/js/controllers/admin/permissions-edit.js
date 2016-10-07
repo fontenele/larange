@@ -2,9 +2,12 @@ define(['moment'], function(moment) {
 
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('PermissionsEditController', function($rootScope, $scope, $location, $http, $window, router) {
-        $rootScope.namespace = [['Admin', 'admin'], ['Permissions', 'permissions'], ['Edit', '']];
 
         router.getJson().then(function(data) {
+            $rootScope.namespace = [['Administração', 'admin'], ['Permissões', 'permissions'], [(data.item ? 'Editar' : 'Criar'), '']];
+            $rootScope.pageHeader = data.item ? 'Editar permissão' : 'Criar permissão';
+            $rootScope.pageSubheader = data.item ? data.item.label : '';
+            
             $scope.item = data.item;
             $scope.list = data.roles;
             $scope.actives = data.actives;
