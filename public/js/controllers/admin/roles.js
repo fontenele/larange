@@ -3,12 +3,6 @@ define([], function() {
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('RolesController', function($rootScope, $scope, $location, $http, $route, router) {
         $rootScope.namespace = [['Admin', 'admin'], ['Roles', '']];
-        
-        $rootScope.menu = [
-            {label: 'Painel', url: 'admin', selected: false},
-            {label: 'Perfis', url: 'roles', selected: true},
-            {label: 'Usuários', url: 'users', selected: false}
-        ];
 
         $scope.getItemsList = function (paginator) {
             var getList = function () {

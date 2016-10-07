@@ -2,11 +2,6 @@ define(['moment'], function(moment) {
 
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('RolesPermissionsController', function($rootScope, $scope, $location, $http, $window, router) {
-        $rootScope.menu = [
-            {label: 'Painel', url: 'admin', selected: false},
-            {label: 'Perfis', url: 'roles', selected: true},
-            {label: 'Usuários', url: 'users', selected: false}
-        ];
 
         $scope.getItemsList = function () {
             router.getJson().then(function (data) {

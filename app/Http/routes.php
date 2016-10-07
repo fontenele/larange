@@ -14,7 +14,7 @@
 Route::get('/', 'WelcomeController@index');
 
 Route::get('view/{template}', 'EngineController@view')->where('template', '.+');
-Route::get('routes', 'EngineController@routes');
+Route::get('config', 'EngineController@config');
 
 Route::get('home', 'HomeController@home');
 Route::get('view1', 'HomeController@view1');

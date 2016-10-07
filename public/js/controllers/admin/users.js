@@ -4,13 +4,6 @@ define([], function() {
     mainApp.controller('UsersController', function($rootScope, $scope, $location, $http, $route, router) {
         $rootScope.namespace = [['Admin', 'admin'], ['Users', '']];
         
-        $rootScope.menu = [
-            {label: 'Painel', url: 'admin', selected: false},
-            {label: 'Perfis', url: 'roles', selected: false},
-            {label: 'Permissões', url: 'permissions', selected: false},
-            {label: 'Usuários', url: 'users', selected: true}
-        ];
-        
         $scope.getItemsList = function (paginator) {
             var getList = function () {
                 router.getJson(paginator).then(function(data) {

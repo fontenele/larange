@@ -185,12 +185,12 @@ require([
         });
         
         // Get routes
-        $http.get('routes').then(function (routes) {
+        $http.get('config').then(function (config) {
 
             mainApp.config(function($routeProvider, $ocLazyLoadProvider, $interpolateProvider, $authProvider, $httpProvider, $provide, routesProvider) {
                 // Define routes
-                routesProvider.setRoutes(routes);
-
+                routesProvider.setRoutes(config.routes);
+                
                 /**
                  * HTTP Request Interceptor
                  * @param $q
@@ -280,7 +280,7 @@ require([
                         controller: function($rootScope, $scope, $routeParams, $ocLazyLoad, $q, $http, $compile, $templateRequest, $location, router) {
                             var lazyDeferred = $q.defer();
                             
-                            routesProvider.actual = $routeParams.action;
+                            routesProvider.setActual($routeParams.action);
                             var route = routesProvider.getRoute();
 
                             // Get User from storage
@@ -292,6 +292,28 @@ require([
                                 $location.path(routesProvider.getRoute('login').url);
                                 $rootScope.menuItemAtual = routesProvider.getActual();
                                 return lazyDeferred.promise;
+                            }
+
+                            $rootScope.bcItem = function (url, lastItem) {
+                                if(lastItem) {
+                                    return false;
+                                }
+                                $location.path(url);
+                            };
+
+                            if(user) {
+                                $rootScope.authenticated = true;
+                                $rootScope.currentUser = user;
+                                $rootScope.permissions = user.permissions;
+                                $rootScope.menu = config.menus[route.menu[0]];
+                                for(i in $rootScope.menu) {
+                                    // Remove all selected
+                                    $rootScope.menu[i].selected = false;
+                                    // Add active to selected item
+                                    if($rootScope.menu[i].url == route.menu[1]) {
+                                        $rootScope.menu[i].selected = true;
+                                    }
+                                }
                             }
 
                             switch(true) {
@@ -336,7 +358,7 @@ require([
                     });
 
                     $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
-                        if(current.params.action == routes.login.url) {
+                        if(current.params.action == config.routes.login.url) {
                             $auth.logout();
                             $rootScope.authenticated = false;
                             $rootScope.currentUser = null;
@@ -356,38 +378,39 @@ require([
                         var user = JSON.parse(localStorage.getItem('user'));
 
                         // Load menu dynamic, use $http ou $.get
-                        $rootScope.menu = [
-                            {label: 'Home', url: 'home', selected: false},
-                            {label: 'View1', url: 'view1', selected: false},
-                            {label: 'Admin', url: 'admin', selected: false}
-                        ];
+                        // $rootScope.menu = [
+                        //     {label: 'Home', url: 'home', selected: false},
+                        //     {label: 'View1', url: 'view1', selected: false},
+                        //     {label: 'Admin', url: 'admin', selected: false}
+                        // ];
                         
-                        $rootScope.bcItem = function (url, lastItem) {
-                            if(lastItem) {
-                                return false;
-                            }
-                            $location.path(url);
-                        };
-
-                        if(user) {
-                            $rootScope.authenticated = true;
-                            $rootScope.currentUser = user;
-                            $rootScope.permissions = user.permissions;
-                        }
+                        // $rootScope.bcItem = function (url, lastItem) {
+                        //     if(lastItem) {
+                        //         return false;
+                        //     }
+                        //     $location.path(url);
+                        // };
+                        //
+                        // if(user) {
+                        //     $rootScope.authenticated = true;
+                        //     $rootScope.currentUser = user;
+                        //     $rootScope.permissions = user.permissions;
+                        //     // $rootScope.menu = config.menu;
+                        //     console.log(1,config.routesProvider.getActual(), url);
+                        // }
 
                         // Define active menu
-                        for(i in $rootScope.menu) {
+                        /*for(i in $rootScope.menu) {
                             // Remove all selected
                             $rootScope.menu[i].selected = false;
                             // Add active to selected item
                             if($rootScope.menu[i].url == url) {
                                 $rootScope.menu[i].selected = true;
                             }
-                        }
+                        }*/
                     });
                 });
 
-            // @TODO move this to directive.js
             mainApp.directive("menu", function($location) {
                 return {
                     restrict: "E",
@@ -397,6 +420,7 @@ require([
                         items: '='
                     },
                     link: function($rootScope, $scope, $element) {
+                        console.log("menu");
                         $rootScope.menuLink = function() {
                             if($location.url().substr(1) == this.item.url) {
                                 return;
@@ -411,7 +435,6 @@ require([
                                 '<a href="javascript:void(0)" ng-click="menuLink(item.url)"><% item.label %></a>' +
                             '</li>' +
                         '</ul>'
-
                 }
             });
             

@@ -3,12 +3,6 @@ define(['moment'], function(moment) {
     var mainApp = angular.module("mainApp", []);
     mainApp.controller('UsersEditController', function($rootScope, $scope, $location, $http, $window, router) {
         $rootScope.namespace = [['Admin', 'admin'], ['Users', 'users'], ['Edit', '']];
-        
-        $rootScope.menu = [
-            {label: 'Painel', url: 'admin', selected: false},
-            {label: 'Perfis', url: 'roles', selected: false},
-            {label: 'Usuários', url: 'users', selected: true}
-        ];
 
         router.getJson().then(function(data) {
             $scope.item = data.item;
