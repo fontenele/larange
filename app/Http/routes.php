@@ -18,6 +18,7 @@ Route::get('config', 'EngineController@config');
 
 Route::get('home', 'HomeController@home')->middleware('after');
 Route::get('view1', 'HomeController@view1')->middleware('after');
+Route::post('profile/save', 'HomeController@profileSave');
 
 // Module admin
 Route::group(['prefix' => 'admin', 'middleware' => ['after']], function() {

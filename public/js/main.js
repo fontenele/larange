@@ -22,6 +22,8 @@ require.config({
         'bootstrap': '../vendor/bootstrap/dist/js/bootstrap.min',
         // adminlte
         'adminlte': '../vendor/admin-lte/dist/js/app',
+        // iCheck
+        'icheck': '../vendor/admin-lte/plugins/iCheck/icheck',
         // angular
         'angular': '../vendor/angular/angular.min',
         'ocLazyLoad': '../vendor/ocLazyLoad/dist/ocLazyLoad.require',
@@ -52,7 +54,8 @@ require.config({
         'momentLocales': ['momentLocalesAll'],
         'noty': ['jquery'],
         'noty-theme-relax': ['noty'],
-        'adminlte': ['jquery', 'bootstrap']
+        'adminlte': [ 'icheck'],
+        'icheck': ['jquery', 'bootstrap', 'jquery']
     },
     packages: {
     }
@@ -328,13 +331,146 @@ require([
                                 }
                             }
 
+                            $rootScope.checkAclPermission = function (aclURL) {
+                                if(aclURL && $rootScope.permissions[aclURL] == undefined) {
+                                    return false;
+                                }
+                                return true;
+                            };
+
+                            $rootScope.profileColors = [
+                                {label: 'Black', name: 'skin-black', hex: '#222222', icon: 'fa fa-square'},
+                                {label: 'Blue', name: 'skin-blue', hex: '#3C8DBC', icon: 'fa fa-square'},
+                                {label: 'Green', name: 'skin-green', hex: '#00A65A', icon: 'fa fa-square'},
+                                {label: 'Purple', name: 'skin-purple', hex: '#605CA8', icon: 'fa fa-square'},
+                                {label: 'Red', name: 'skin-red', hex: '#DD4B39', icon: 'fa fa-square'},
+                                {label: 'Yellow', name: 'skin-yellow', hex: '#F39C12', icon: 'fa fa-square'}
+                            ];
+
+                            $rootScope.profileAvatars = [
+                                {name: '1', filename: 'images/avatar/1.jpg', icon: ''},
+                                {name: '2', filename: 'images/avatar/2.jpg', icon: ''},
+                                {name: '3', filename: 'images/avatar/3.jpg', icon: ''},
+                                {name: '4', filename: 'images/avatar/4.jpg', icon: ''},
+                                {name: '5', filename: 'images/avatar/5.jpg', icon: ''},
+                                {name: '6', filename: 'images/avatar/6.jpg', icon: ''},
+                                {name: '7', filename: 'images/avatar/7.jpg', icon: ''},
+                                {name: '8', filename: 'images/avatar/8.jpg', icon: ''},
+                                {name: '9', filename: 'images/avatar/9.jpg', icon: ''},
+                                {name: '10', filename: 'images/avatar/10.jpg', icon: ''},
+                                {name: '11', filename: 'images/avatar/11.jpg', icon: ''},
+                                {name: '12', filename: 'images/avatar/12.jpg', icon: ''},
+                                {name: '13', filename: 'images/avatar/13.jpg', icon: ''},
+                                {name: '14', filename: 'images/avatar/14.jpg', icon: ''},
+                                {name: '15', filename: 'images/avatar/15.jpg', icon: ''}
+                            ];
+
+                            // Get User from storage
+                            var user = JSON.parse(localStorage.getItem('user'));
+
+                            if(user) {
+                                for(a in $rootScope.profileAvatars) {
+                                    if($rootScope.profileAvatars[a].name == user.avatar) {
+                                        $rootScope.profileAvatars[a].icon = 'profileAvatarSelected';
+                                    }
+                                }
+                                for(a in $rootScope.profileColors) {
+                                    if($rootScope.profileColors[a].name == user.theme) {
+                                        $rootScope.profileColors[a].icon = 'fa fa-check-square';
+                                    }
+                                }
+                            }
+
+                            $rootScope.profileSelectTheme = function ($event, color) {
+                                for(c in $rootScope.profileColors) {
+                                    $rootScope.profileColors[c].icon = 'fa fa-square';
+                                }
+                                color.icon = 'fa fa-check-square';
+                                $rootScope.profileThemeTemp = color.name;
+                            };
+
+                            $rootScope.profileSelectAvatar = function ($event, avatar) {
+                                for(a in $rootScope.profileAvatars) {
+                                    $rootScope.profileAvatars[a].icon = '';
+                                }
+                                avatar.icon = 'profileAvatarSelected';
+                            };
+
+                            $rootScope.profileCleanTheme = function () {
+                                $rootScope.profileThemeTemp = '';
+                            };
+
+                            $rootScope.saveProfile = function (avatars, colors, user) {
+                                var avatar = {};
+                                var color = {};
+                                for(a in avatars) {
+                                    if(avatars[a].icon) {
+                                        avatar = avatars[a];
+                                        break;
+                                    }
+                                }
+                                for(c in colors) {
+                                    if(colors[c].icon == 'fa fa-check-square') {
+                                        color = colors[c];
+                                        break;
+                                    }
+                                }
+
+                                var item = {
+                                    email: user.email,
+                                    name: user.name,
+                                    avatar: avatar.name,
+                                    theme: color.name
+                                };
+
+                                $http.post('profile/save', item).success(function (data) {
+                                    if(data.status == 'success') {
+                                        var n = noty({
+                                            layout: 'center',
+                                            type: 'success',
+                                            text: data.message,
+                                            animation: {
+                                                open: 'animated flipInX',
+                                                close: 'animated flipOutX',
+                                                easing: 'swing',
+                                                speed: 500
+                                            }
+                                        });
+                                        setTimeout(function () {
+                                            n.close();
+                                        }, 3000);
+                                        $('#profile-modal').modal('hide');
+                                        $rootScope.currentUser.name = data.user.name;
+                                        $rootScope.currentUser.email = data.user.email;
+                                        $rootScope.currentUser.avatar = 'images/avatar/' + data.user.avatar + '.jpg';
+                                        $rootScope.currentUser.theme = data.user.theme;
+                                        $rootScope.profileThemeTemp = '';
+
+                                        localStorage.setItem('user', JSON.stringify($rootScope.currentUser));
+                                        return;
+                                    }
+
+                                    noty({
+                                        layout: 'center',
+                                        type: 'error',
+                                        text: data.message,
+                                        animation: {
+                                            open: 'animated flipInX',
+                                            close: 'animated flipOutX',
+                                            easing: 'swing',
+                                            speed: 500
+                                        }
+                                    });
+                                });
+                            };
+                        
                             if(user) {
                                 user.avatar = 'images/avatar/' + user.avatar + '.jpg';
                                 $rootScope.authenticated = true;
                                 $rootScope.currentUser = user;
                                 $rootScope.permissions = user.permissions;
                             } else {
-                                $rootScope.currentUser = {avatar: 'images/avatar/2.jpg'};
+                                $rootScope.currentUser = {avatar: 'images/avatar/2.jpg', theme: 'skin-red'};
                             }
 
                             switch(true) {
@@ -547,6 +683,7 @@ require([
 
             /**
              * App Main Controller
+             * DO NOT USE $HTTP here, dont have the token necessary to re-auth on server-side
              */
             mainApp.controller('PrincipalController', function($rootScope, $scope, $ocLazyLoad, $routeParams, $location, $auth) {
                 $scope.menuItemAtual = $location.path().substring(1);
@@ -559,12 +696,11 @@ require([
                     $location.path(url);
                 };
                 
-                $scope.checkAclPermission = function (aclURL) {
-                    if(aclURL && $rootScope.permissions[aclURL] == undefined) {
-                        return false;
-                    }
-                    return true;
-                }
+                // $scope.profileThemeTemp = '';
+                
+                
+                
+                
             });
 
             /**

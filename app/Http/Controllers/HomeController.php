@@ -1,5 +1,9 @@
 <?php namespace App\Http\Controllers;
 
+
+use App\User;
+use Illuminate\Http\Request;
+
 class HomeController extends Controller {
 
 	/*
@@ -37,6 +41,25 @@ class HomeController extends Controller {
 		    'total_pagar' => rand(1, 500),
 		    'total_horas' => rand(1, 50),
         ];
+	}
+
+    public function profileSave(Request $request) {
+        $post = $request->all();
+        $userId = \Session::get('user')->id;
+        $user = User::find($userId);
+        
+        $user->email = $post['email'];
+        $user->name = $post['name'];
+        $user->avatar = $post['avatar'];
+        $user->theme = $post['theme'];
+        
+        if($user->save()) {
+            return [
+                'user' => $user->toArray(),
+                'message' => 'Conta de usuário salva com sucesso.',
+                'status' => 'success',
+            ];
+        }
 	}
 
 	public function view1() {

@@ -39,11 +39,15 @@
             .logo-mini {
                 margin-left: -22px !important;
             }
+            .profileAvatarSelected {
+                border: 3px solid #357CA5;
+            }
+            .modal-body form label { color: #080808; }
             .ng-cloak { display:none; }
         </style>
         <script type="text/javascript" src="vendor/requirejs/require.js" data-main="js/main"></script>
     </head>
-    <body data-ng-controller="PrincipalController" ng-cloak class="ng-cloak hold-transition skin-red sidebar-mini" layout="column">
+    <body data-ng-controller="PrincipalController" ng-cloak ng-class="profileThemeTemp || currentUser.theme" class="ng-cloak hold-transition sidebar-collapse sidebar-mini" layout="column">
 
         <div class="wrapper">
 
@@ -152,25 +156,12 @@
                                             <small>Usuário desde <% currentUser.created_at | dateFormat : 'DD [de] MMMM [de] YYYY' %></small>
                                         </p>
                                     </li>
-                                    <li class="user-body">
-                                        <div class="row">
-                                            <div class="col-xs-4 text-center">
-                                                <a href="javascript:void(0)">Followers</a>
-                                            </div>
-                                            <div class="col-xs-4 text-center">
-                                                <a href="javascript:void(0)">Sales</a>
-                                            </div>
-                                            <div class="col-xs-4 text-center">
-                                                <a href="javascript:void(0)">Friends</a>
-                                            </div>
-                                        </div>
-                                    </li>
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <a href="javascript:void(0)" class="btn btn-default btn-flat">Profile</a>
+                                            <button type="button" class="btn btn-default btn-flat" data-toggle="modal" data-target="#profile-modal">Configurar</button>
                                         </div>
                                         <div class="pull-right">
-                                            <button ng-click="menuItem('login', true)" class="btn btn-default btn-flat">Sign out</button>
+                                            <button type="button" ng-click="menuItem('login', true)" class="btn btn-default btn-flat">Sair</button>
                                         </div>
                                     </li>
                                 </ul>
@@ -288,6 +279,63 @@
             </aside>
             <div class="control-sidebar-bg"></div-->
             
+        </div>
+
+        <div class="modal fade modal-primary" id="profile-modal" tabindex="-1" role="dialog" aria-labelledby="profile-modal-label">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="profileCleanTheme()"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="profile-modal-label">Configurar conta</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="box box-info">
+                            
+                            <form class="form-horizontal">
+                                <div class="box-body">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2">Avatar</label>
+                                        <div class="col-xs-9">
+                                            <img ng-click="profileSelectAvatar($event, avatar)"  class="img-circle" ng-class="avatar.icon" ng-repeat="avatar in profileAvatars" ng-src="<% avatar.filename %>" style="cursor:pointer; max-width: 30px;margin-right: 5px;" />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2">Nome</label>
+                                        <div class="col-xs-9">
+                                            <input class="form-control" ng-model="currentUser.name" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2">E-mail</label>
+                                        <div class="col-xs-9">
+                                            <input class="form-control" ng-model="currentUser.email" />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2">Tema</label>
+                                        <div class="col-xs-9 text-blue">
+                                            <ul class="list-inline">
+                                                <li ng-click="profileSelectTheme($event, color)" title="<% color.label %>" ng-repeat="color in profileColors" style="cursor: pointer;font-size: 30px;color: <% color.hex %>">
+                                                    <i ng-class="color.icon"></i>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="profileCleanTheme()">Cancelar</button>
+                        <button type="button" class="btn btn-primary" ng-click="saveProfile(profileAvatars, profileColors, currentUser)">Salvar</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!--nav class="navbar navbar-default navbar-fixed-top">

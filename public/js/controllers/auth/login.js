@@ -43,11 +43,12 @@ define([], function() {
                     data: {'access_token': result.data.access_token}
                 }).then(function(response) {
                     var user = response.data;
-                    localStorage.setItem('user', JSON.stringify(user));
 
                     $rootScope.authenticated = true;
                     $rootScope.currentUser = user;
                     $rootScope.permissions = user.permissions;
+                    
+                    localStorage.setItem('user', JSON.stringify(user));
                     
                     $location.path('/home');
                     $rootScope.menuItemAtual = $location.path().substring(1);
