@@ -42,6 +42,9 @@
             .profileAvatarSelected {
                 border: 3px solid #357CA5;
             }
+            .text-disabled {
+                text-decoration: line-through !important;
+            }
             .modal-body form label { color: #080808; }
             .ng-cloak { display:none; }
         </style>

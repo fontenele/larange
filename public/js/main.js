@@ -554,7 +554,7 @@ require([
                     },
                     template:  
                         '<li ng-repeat="item in items" ng-show="checkAclPermission(item.acl)" ng-class="{\'active\': item.selected}" >' +
-                            '<a href="javascript:void(0)" ng-click="menuItem(item.url)"><i ng-class="item.icon"></i> <span><% item.label %></span></a>' +
+                            '<a href="javascript:void(0)" ng-click="menuItem(item.url)" ng-class="item.parentCss"><i ng-class="item.icon"></i> <span><% item.label %></span></a>' +
                         '</li>'
                 }
             });

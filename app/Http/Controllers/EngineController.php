@@ -12,25 +12,25 @@ class EngineController extends Controller {
             'guest' => [
                 'header' => 'Bem vindo, visitante!',
                 'items' => [
-                    ['url' => 'login', 'label' => 'Login', 'icon' => 'fa fa-lock', 'acl' => ''],
+                    ['url' => 'login', 'label' => 'Login', 'icon' => 'fa fa-lock', 'acl' => '', 'parentCss' => ''],
                 ]
             ],
             'default' => [
                 'header' => 'Principal',
                 'items' => [
-                    ['url' => 'home', 'label' => 'Principal', 'icon' => 'fa fa-home', 'acl' => ''],
-                    ['url' => 'view1', 'label' => 'Folha de Ponto', 'icon' => 'fa fa-folder-open', 'acl' => ''],
-                    ['url' => 'admin', 'label' => 'Admin', 'icon' => 'fa fa-cogs', 'acl' => 'users.list'],
+                    ['url' => 'home', 'label' => 'Principal', 'icon' => 'fa fa-home', 'acl' => '', 'parentCss' => ''],
+                    ['url' => 'view1', 'label' => 'Folha de Ponto', 'icon' => 'fa fa-folder-open', 'acl' => '', 'parentCss' => ''],
+                    ['url' => 'admin', 'label' => 'Admin', 'icon' => 'fa fa-cogs', 'acl' => 'users.list', 'parentCss' => ''],
                 ]
             ],
             'admin' => [
                 'header' => 'Administração',
                 'items' => [
-                    ['url' => 'admin', 'label' => 'Administração', 'icon' => 'fa fa-cogs', 'acl' => ''],
-                    ['url' => 'roles', 'label' => 'Perfis', 'icon' => 'fa fa-sitemap', 'acl' => 'roles.list'],
-                    ['url' => 'permissions', 'label' => 'Permissões', 'icon' => 'fa fa-shield', 'acl' => 'permissions.list'],
-                    ['url' => 'users', 'label' => 'Usuários', 'icon' => 'fa fa-user', 'acl' => 'users.list'],
-                    ['url' => 'home', 'label' => 'Principal', 'icon' => 'fa fa-chevron-circle-left', 'acl' => ''],
+                    ['url' => 'admin', 'label' => 'Administração', 'icon' => 'fa fa-cogs', 'acl' => '', 'parentCss' => ''],
+                    ['url' => 'roles', 'label' => 'Perfis', 'icon' => 'fa fa-sitemap', 'acl' => 'roles.list', 'parentCss' => 'bg-green'],
+                    ['url' => 'permissions', 'label' => 'Permissões', 'icon' => 'fa fa-shield', 'acl' => 'permissions.list', 'parentCss' => 'bg-yellow'],
+                    ['url' => 'users', 'label' => 'Usuários', 'icon' => 'fa fa-user', 'acl' => 'users.list', 'parentCss' => 'bg-aqua'],
+                    ['url' => 'home', 'label' => 'Principal', 'icon' => 'fa fa-chevron-circle-left', 'acl' => '', 'parentCss' => ''],
                 ]
             ]
         ];

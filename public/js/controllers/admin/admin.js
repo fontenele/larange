@@ -7,6 +7,11 @@ define([], function() {
             $rootScope.namespace = [['Administração', '']];
             $rootScope.pageHeader = '';
             $rootScope.pageSubheader = '';
+            
+            $scope.total = data.total;
+
+            // console.log();
+            // console.log($rootScope.checkAclPermission());
         });
     });
 
